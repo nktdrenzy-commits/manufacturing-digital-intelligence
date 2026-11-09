@@ -13,27 +13,28 @@
 
 /* 兼容性层：oklch() / color-mix() 在旧版 Safari 不被支持。
    先声明 hex 回退值，再声明 oklch —— 支持的浏览器会用后者覆盖，
-   不支持的（iOS 15 及以下）保留前者，页面不会因颜色失效而错乱。 */
+   不支持的（iOS 15 及以下）保留前者，页面不会因颜色失效而错乱。
+   hex 值由 convert-oklch.js 计算，与 oklch 完全等价（色域已裁剪）。 */
 :root {
   --paper:      #F8FAFD;
   --surface:    #FFFFFF;
-  --surface-2:  #F1F4F8;
-  --surface-3:  #E7ECF0;
-  --ink:        #242D36;
-  --ink-2:      #55606B;
-  --ink-3:      #7A838D;
+  --surface-2:  #F1F5F8;
+  --surface-3:  #E6EAEF;
+  --ink:        #1A2027;
+  --ink-2:      #4D535B;
+  --ink-3:      #646971;
   --primary:    #115BA4;
-  --primary-d:  #0C447C;
-  --primary-l:  #378ADD;
-  --primary-w:  #E6F1FB;
-  --accent:     #B07D1F;
-  --accent-w:   #FAF3E3;
+  --primary-d:  #033469;
+  --primary-l:  #6F9CCF;
+  --primary-w:  #E5F2FF;
+  --accent:     #A7610C;
+  --accent-w:   #FFF1E2;
   --risk:       #AA2A27;
-  --risk-w:     #FBEDEC;
-  --ok:         #1D7A5F;
-  --ok-w:       #E8F4F0;
-  --line:       #E7ECF0;
-  --line-2:     #D5D9DF;
+  --risk-w:     #FFEDEA;
+  --ok:         #006B50;
+  --ok-w:       #E3F5ED;
+  --line:       #DCE0E5;
+  --line-2:     #C2C8CE;
 }
 
 @supports (color: oklch(50% 0.1 250)) {
@@ -354,13 +355,13 @@ td b { color: var(--primary-d); font-weight: 700; }
 .fig-b { padding: 26px; }
 .fig-f { padding: 12px 26px 16px; border-top: 1px solid var(--line); font-size: .78rem; color: var(--ink-3); font-family: var(--font-mono); }
 svg { display: block; width: 100%; height: auto; }
-.vs-th { font-family: var(--font-sans); font-size: 13px; font-weight: 700; fill: #242D36; }
-.vs-t { font-family: var(--font-sans); font-size: 12.5px; fill: #55606B; }
-.vs-ts { font-family: var(--font-sans); font-size: 11px; fill: #7A838D; }
+.vs-th { font-family: var(--font-sans); font-size: 13px; font-weight: 700; fill: #1A2027; }
+.vs-t { font-family: var(--font-sans); font-size: 12.5px; fill: #4D535B; }
+.vs-ts { font-family: var(--font-sans); font-size: 11px; fill: #646971; }
 .vs-num { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
 .vs-numl { font-family: var(--font-mono); font-size: 11px; font-weight: 500; }
-.vs-grid { stroke: #E7ECF0; stroke-width: 1; stroke-dasharray: 2 5; }
-.vs-axis { stroke: #D5D9DF; stroke-width: 1; }
+.vs-grid { stroke: #DCE0E5; stroke-width: 1; stroke-dasharray: 2 5; }
+.vs-axis { stroke: #C2C8CE; stroke-width: 1; }
 
 /* ── 首页 ───────────────────────────────── */
 .hero { padding: 100px 0 90px; border-top: none; }
@@ -790,31 +791,31 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
         <div class="fig-b">
 <svg viewBox="0 0 900 300" role="img" aria-label="智能工厂四层梯度：基础级三万五千余家、先进级八千二百余家、卓越级五百余家、领航级十五家">
           <g>
-            <rect x="0" y="222" width="196" height="56" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="0" y="222" width="196" height="56" rx="6" fill="#E6EAEF" stroke="#C2C8CE" stroke-width="1"/>
             <text x="16" y="245" class="vs-th">基础级</text>
-            <text x="16" y="265" class="vs-numl" fill="#FF00FF">3.5 万余家</text>
+            <text x="16" y="265" class="vs-numl" fill="#4D535B">3.5 万余家</text>
 
-            <rect x="212" y="166" width="196" height="112" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="212" y="166" width="196" height="112" rx="6" fill="#D4E3F4" stroke="#84A1C3" stroke-width="1"/>
             <text x="228" y="192" class="vs-th">先进级</text>
-            <text x="228" y="216" class="vs-numl" fill="#FF00FF">8,200 余家</text>
+            <text x="228" y="216" class="vs-numl" fill="#2B496C">8,200 余家</text>
             <text x="228" y="240" class="vs-ts">规模化数字化</text>
 
-            <rect x="424" y="110" width="196" height="168" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="424" y="110" width="196" height="168" rx="6" fill="#B4D4F9" stroke="#4B7DB7" stroke-width="1"/>
             <text x="440" y="136" class="vs-th">卓越级</text>
-            <text x="440" y="160" class="vs-numl" fill="#FF00FF">500 余家</text>
+            <text x="440" y="160" class="vs-numl" fill="#0B376A">500 余家</text>
             <text x="440" y="184" class="vs-ts">行业标杆</text>
 
-            <rect x="636" y="20" width="264" height="258" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
-            <text x="656" y="50" class="vs-th" fill="#0000FF">领航级</text>
-            <text x="656" y="78" class="vs-num" fill="#FF00FF" font-size="19">15 家</text>
-            <text x="656" y="104" class="vs-ts" fill="#FF00FF">全球领先"中国样板"</text>
-            <line x1="656" y1="120" x2="884" y2="120" stroke="#FF00FF" stroke-width="1"/>
-            <text x="656" y="146" class="vs-ts" fill="#FF00FF">生产效率　+29%</text>
-            <text x="656" y="170" class="vs-ts" fill="#FF00FF">产品不良率　−47%</text>
-            <text x="656" y="194" class="vs-ts" fill="#FF00FF">AI 渗透　70%+ 场景</text>
-            <text x="656" y="218" class="vs-ts" fill="#FF00FF">垂直模型　6,000 余个</text>
-            <text x="656" y="242" class="vs-ts" fill="#FF00FF">带动上下游　1,300+ 家</text>
-            <text x="656" y="266" class="vs-ts" fill="#FF00FF">规模化应用　1,700+ 项</text>
+            <rect x="636" y="20" width="264" height="258" rx="6" fill="#033469" stroke="#033469" stroke-width="1"/>
+            <text x="656" y="50" class="vs-th" fill="#F0F6FC">领航级</text>
+            <text x="656" y="78" class="vs-num" fill="#AFD5FE" font-size="19">15 家</text>
+            <text x="656" y="104" class="vs-ts" fill="#A2BAD4">全球领先"中国样板"</text>
+            <line x1="656" y1="120" x2="884" y2="120" stroke="#406084" stroke-width="1"/>
+            <text x="656" y="146" class="vs-ts" fill="#BBD4EE">生产效率　+29%</text>
+            <text x="656" y="170" class="vs-ts" fill="#BBD4EE">产品不良率　−47%</text>
+            <text x="656" y="194" class="vs-ts" fill="#BBD4EE">AI 渗透　70%+ 场景</text>
+            <text x="656" y="218" class="vs-ts" fill="#BBD4EE">垂直模型　6,000 余个</text>
+            <text x="656" y="242" class="vs-ts" fill="#BBD4EE">带动上下游　1,300+ 家</text>
+            <text x="656" y="266" class="vs-ts" fill="#BBD4EE">规模化应用　1,700+ 项</text>
           </g>
         </svg>
         </div>
@@ -857,51 +858,51 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
         <div class="fig-b">
 <svg viewBox="0 0 900 260" role="img" aria-label="2027年五项量化KPI与中央部委地方三级政策链">
           <g>
-            <rect x="0" y="0" width="168" height="72" rx="8" fill="#FF00FF"/>
-            <text x="84" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">1000</text>
-            <text x="84" y="55" class="vs-ts" fill="#FF00FF" text-anchor="middle">高水平工业智能体</text>
+            <rect x="0" y="0" width="168" height="72" rx="8" fill="#033469"/>
+            <text x="84" y="34" class="vs-num" fill="#BDDBFB" font-size="21" text-anchor="middle">1000</text>
+            <text x="84" y="55" class="vs-ts" fill="#A8C1DA" text-anchor="middle">高水平工业智能体</text>
 
-            <rect x="184" y="0" width="168" height="72" rx="8" fill="#FF00FF"/>
-            <text x="268" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">100</text>
-            <text x="268" y="55" class="vs-ts" fill="#FF00FF" text-anchor="middle">工业高质量数据集</text>
+            <rect x="184" y="0" width="168" height="72" rx="8" fill="#033469"/>
+            <text x="268" y="34" class="vs-num" fill="#BDDBFB" font-size="21" text-anchor="middle">100</text>
+            <text x="268" y="55" class="vs-ts" fill="#A8C1DA" text-anchor="middle">工业高质量数据集</text>
 
-            <rect x="368" y="0" width="168" height="72" rx="8" fill="#FF00FF"/>
-            <text x="452" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">500</text>
-            <text x="452" y="55" class="vs-ts" fill="#FF00FF" text-anchor="middle">典型应用场景</text>
+            <rect x="368" y="0" width="168" height="72" rx="8" fill="#033469"/>
+            <text x="452" y="34" class="vs-num" fill="#BDDBFB" font-size="21" text-anchor="middle">500</text>
+            <text x="452" y="55" class="vs-ts" fill="#A8C1DA" text-anchor="middle">典型应用场景</text>
 
-            <rect x="552" y="0" width="168" height="72" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
-            <text x="636" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">3–5</text>
+            <rect x="552" y="0" width="168" height="72" rx="8" fill="#E6EAEF" stroke="#C2C8CE" stroke-width="1"/>
+            <text x="636" y="34" class="vs-num" fill="#4D535B" font-size="21" text-anchor="middle">3–5</text>
             <text x="636" y="55" class="vs-ts" text-anchor="middle">通用大模型深度应用</text>
 
-            <rect x="736" y="0" width="164" height="72" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
-            <text x="818" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">1000</text>
+            <rect x="736" y="0" width="164" height="72" rx="8" fill="#E6EAEF" stroke="#C2C8CE" stroke-width="1"/>
+            <text x="818" y="34" class="vs-num" fill="#4D535B" font-size="21" text-anchor="middle">1000</text>
             <text x="818" y="55" class="vs-ts" text-anchor="middle">标杆企业</text>
           </g>
 
           <text x="0" y="106" class="vs-th">政策三级链条</text>
           <g>
-            <rect x="0" y="120" width="270" height="60" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="0" y="120" width="270" height="60" rx="8" fill="#E5F2FF" stroke="#A3BAD4" stroke-width="1"/>
             <text x="16" y="145" class="vs-th">中央</text>
             <text x="16" y="166" class="vs-ts">二十届四中全会 · "人工智能+"行动</text>
 
-            <path d="M280 150 L312 150" stroke="#FF00FF" stroke-width="1.2" fill="none"/>
-            <path d="M312 150 l-6 -3.5 v7 z" fill="#FF00FF"/>
+            <path d="M280 150 L312 150" stroke="#84A1C3" stroke-width="1.2" fill="none"/>
+            <path d="M312 150 l-6 -3.5 v7 z" fill="#84A1C3"/>
 
-            <rect x="320" y="120" width="270" height="60" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="320" y="120" width="270" height="60" rx="8" fill="#D4E3F4" stroke="#84A1C3" stroke-width="1"/>
             <text x="336" y="145" class="vs-th">部委</text>
             <text x="336" y="166" class="vs-ts">八部门行动 + 行业实施方案</text>
 
-            <path d="M600 150 L632 150" stroke="#FF00FF" stroke-width="1.2" fill="none"/>
-            <path d="M632 150 l-6 -3.5 v7 z" fill="#FF00FF"/>
+            <path d="M600 150 L632 150" stroke="#84A1C3" stroke-width="1.2" fill="none"/>
+            <path d="M632 150 l-6 -3.5 v7 z" fill="#84A1C3"/>
 
-            <rect x="640" y="120" width="260" height="60" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="640" y="120" width="260" height="60" rx="8" fill="#B4D4F9" stroke="#4B7DB7" stroke-width="1"/>
             <text x="656" y="145" class="vs-th">地方</text>
             <text x="656" y="166" class="vs-ts">上海：2028年推出 300 个高水平智能体</text>
           </g>
 
-          <rect x="0" y="198" width="900" height="52" rx="8" fill="#00FF00" stroke="#FFFF00" stroke-width="1"/>
-          <text x="20" y="220" class="vs-th" fill="#00FF00">三项配套机制</text>
-          <text x="20" y="240" class="vs-ts" fill="#FFFF00">模数共振行动（数据协同—模型训练—应用开发—安全保障一体化）　·　大小模型协同创新　·　智能体分类分级管理体系</text>
+          <rect x="0" y="198" width="900" height="52" rx="8" fill="#FFF1E2" stroke="#EDD2B5" stroke-width="1"/>
+          <text x="20" y="220" class="vs-th" fill="#7C4607">三项配套机制</text>
+          <text x="20" y="240" class="vs-ts" fill="#684422">模数共振行动（数据协同—模型训练—应用开发—安全保障一体化）　·　大小模型协同创新　·　智能体分类分级管理体系</text>
         </svg>
         </div>
         <div class="fig-f">数据来源：工业和信息化部等八部门《"人工智能+制造"专项行动实施意见》（2026年1月7日印发）</div>
@@ -939,49 +940,49 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
           <text x="0" y="16" class="vs-th">应用渗透 与 规模化落地</text>
           <g>
             <line x1="40" y1="122" x2="660" y2="122" class="vs-axis"/>
-            <text x="118" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">2024</text>
-            <rect x="78" y="101" width="80" height="21" rx="3" fill="#FF00FF"/>
-            <text x="118" y="142" class="vs-num" fill="#FF00FF" text-anchor="middle">9.6%</text>
+            <text x="118" y="36" class="vs-numl" fill="#4D535B" text-anchor="middle">2024</text>
+            <rect x="78" y="101" width="80" height="21" rx="3" fill="#A7CBF4"/>
+            <text x="118" y="142" class="vs-num" fill="#4D535B" text-anchor="middle">9.6%</text>
             <text x="118" y="160" class="vs-ts" text-anchor="middle">大模型及智能体应用</text>
 
-            <text x="278" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">2025</text>
-            <rect x="238" y="41" width="80" height="81" rx="3" fill="#FF00FF"/>
-            <text x="278" y="142" class="vs-num" fill="#FF00FF" text-anchor="middle">47.5%</text>
+            <text x="278" y="36" class="vs-numl" fill="#4D535B" text-anchor="middle">2025</text>
+            <rect x="238" y="41" width="80" height="81" rx="3" fill="#115BA4"/>
+            <text x="278" y="142" class="vs-num" fill="#115BA4" text-anchor="middle">47.5%</text>
             <text x="278" y="160" class="vs-ts" text-anchor="middle">大模型及智能体应用</text>
 
-            <text x="438" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">跨多环节</text>
-            <rect x="398" y="61" width="80" height="61" rx="3" fill="#FF00FF"/>
-            <text x="438" y="142" class="vs-num" fill="#FF00FF" text-anchor="middle">35%</text>
+            <text x="438" y="36" class="vs-numl" fill="#4D535B" text-anchor="middle">跨多环节</text>
+            <rect x="398" y="61" width="80" height="61" rx="3" fill="#6F9CCF"/>
+            <text x="438" y="142" class="vs-num" fill="#115BA4" text-anchor="middle">35%</text>
             <text x="438" y="160" class="vs-ts" text-anchor="middle">多运营环节部署</text>
 
-            <text x="598" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">规模化</text>
-            <rect x="558" y="96" width="80" height="26" rx="3" fill="#FF0000"/>
-            <text x="598" y="142" class="vs-num" fill="#FF0000" text-anchor="middle">≈15%</text>
+            <text x="598" y="36" class="vs-numl" fill="#4D535B" text-anchor="middle">规模化</text>
+            <rect x="558" y="96" width="80" height="26" rx="3" fill="#9E2320"/>
+            <text x="598" y="142" class="vs-num" fill="#9E2320" text-anchor="middle">≈15%</text>
             <text x="598" y="160" class="vs-ts" text-anchor="middle">产生经营结果</text>
 
-            <path d="M318 61 L558 92" stroke="#FF0000" stroke-width="1.2" fill="none" stroke-dasharray="4 3"/>
-            <text x="438" y="196" class="vs-ts" fill="#FF0000" text-anchor="middle">断点</text>
-            <text x="438" y="212" class="vs-ts" fill="#FF0000" text-anchor="middle">32.5 个百分点</text>
+            <path d="M318 61 L558 92" stroke="#AA2A27" stroke-width="1.2" fill="none" stroke-dasharray="4 3"/>
+            <text x="438" y="196" class="vs-ts" fill="#9E2320" text-anchor="middle">断点</text>
+            <text x="438" y="212" class="vs-ts" fill="#9E2320" text-anchor="middle">32.5 个百分点</text>
           </g>
 
-          <line x1="700" y1="0" x2="700" y2="220" stroke="#FF00FF" stroke-width="1"/>
+          <line x1="700" y1="0" x2="700" y2="220" stroke="#DCE0E5" stroke-width="1"/>
 
           <text x="730" y="16" class="vs-th">制造业 AI 阶段分布</text>
-          <rect x="730" y="30" width="126" height="26" rx="3" fill="#00FF00"/>
+          <rect x="730" y="30" width="126" height="26" rx="3" fill="#915100"/>
           <text x="793" y="48" class="vs-ts" fill="#ffffff" text-anchor="middle">试验阶段 47%</text>
-          <rect x="856" y="30" width="44" height="26" fill="#00FF00"/>
+          <rect x="856" y="30" width="44" height="26" fill="#A86A2C"/>
           <text x="878" y="48" class="vs-ts" fill="#ffffff" text-anchor="middle">31%</text>
-          <rect x="730" y="64" width="170" height="26" rx="3" fill="#FF0000"/>
+          <rect x="730" y="64" width="170" height="26" rx="3" fill="#9E2320"/>
           <text x="815" y="82" class="vs-ts" fill="#ffffff" text-anchor="middle">真正规模化　15%</text>
 
           <text x="730" y="122" class="vs-th">MIT：试点漏斗</text>
-          <rect x="730" y="136" width="82" height="24" rx="4" fill="#FF00FF"/>
+          <rect x="730" y="136" width="82" height="24" rx="4" fill="#01529A"/>
           <text x="771" y="152" class="vs-ts" fill="#ffffff" text-anchor="middle">在看 60%</text>
           <text x="818" y="152" class="vs-ts" text-anchor="middle">→</text>
-          <rect x="832" y="136" width="50" height="24" rx="4" fill="#FF00FF"/>
+          <rect x="832" y="136" width="50" height="24" rx="4" fill="#6996C8"/>
           <text x="857" y="152" class="vs-ts" fill="#ffffff" text-anchor="middle">20%</text>
           <text x="857" y="176" class="vs-ts" text-anchor="middle">↓</text>
-          <rect x="832" y="184" width="50" height="24" rx="4" fill="#FF0000"/>
+          <rect x="832" y="184" width="50" height="24" rx="4" fill="#9E2320"/>
           <text x="857" y="200" class="vs-ts" fill="#ffffff" text-anchor="middle">5%</text>
           <text x="730" y="216" class="vs-ts">约 95% 试点无可测算回报</text>
         </svg>
@@ -1083,38 +1084,38 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
           <text x="490" y="18" class="vs-ts" text-anchor="middle">执行层</text>
 
           <g>
-            <rect x="34" y="32" width="172" height="62" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
-            <text x="50" y="56" class="vs-th" fill="#FF0000">石油化工</text>
-            <text x="50" y="76" class="vs-ts" fill="#FF0000">零人工干预 · 700 万</text>
-            <rect x="216" y="32" width="172" height="62" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
-            <rect x="398" y="32" width="184" height="62" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
-            <text x="490" y="68" class="vs-th" fill="#FF0000" text-anchor="middle">闭环控制</text>
+            <rect x="34" y="32" width="172" height="62" rx="7" fill="#9E2320" stroke="#AA2A27" stroke-width="1"/>
+            <text x="50" y="56" class="vs-th" fill="#FDF2F1">石油化工</text>
+            <text x="50" y="76" class="vs-ts" fill="#F1CEC9">零人工干预 · 700 万</text>
+            <rect x="216" y="32" width="172" height="62" rx="7" fill="#9E2320" stroke="#AA2A27" stroke-width="1"/>
+            <rect x="398" y="32" width="184" height="62" rx="7" fill="#8D0B11" stroke="#941617" stroke-width="1"/>
+            <text x="490" y="68" class="vs-th" fill="#FDF2F1" text-anchor="middle">闭环控制</text>
             <text x="620" y="56" class="vs-ts">安全 · 连续</text>
             <text x="620" y="76" class="vs-ts">零容错</text>
 
-            <rect x="34" y="112" width="172" height="62" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
-            <text x="50" y="136" class="vs-th" fill="#FFFF00">消费电子</text>
-            <text x="50" y="156" class="vs-ts" fill="#00FF00">质检 99.7% · 20 秒</text>
-            <rect x="216" y="112" width="172" height="62" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
-            <rect x="398" y="112" width="184" height="62" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
-            <text x="490" y="148" class="vs-th" fill="#FFFF00" text-anchor="middle">核心工序</text>
+            <rect x="34" y="112" width="172" height="62" rx="7" fill="#814800" stroke="#814800" stroke-width="1"/>
+            <text x="50" y="136" class="vs-th" fill="#FCF3EC">消费电子</text>
+            <text x="50" y="156" class="vs-ts" fill="#F8DBC4">质检 99.7% · 20 秒</text>
+            <rect x="216" y="112" width="172" height="62" rx="7" fill="#814800" stroke="#814800" stroke-width="1"/>
+            <rect x="398" y="112" width="184" height="62" rx="7" fill="#905100" stroke="#905100" stroke-width="1"/>
+            <text x="490" y="148" class="vs-th" fill="#FCF3EC" text-anchor="middle">核心工序</text>
             <text x="620" y="136" class="vs-ts">精度 · 柔性</text>
             <text x="620" y="156" class="vs-ts">复制</text>
 
-            <rect x="34" y="192" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="34" y="192" width="172" height="62" rx="7" fill="#D4E3F4" stroke="#84A1C3" stroke-width="1"/>
             <text x="50" y="216" class="vs-th">汽车产业链</text>
             <text x="50" y="236" class="vs-ts">上市速度 +44%</text>
-            <rect x="216" y="192" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
-            <rect x="398" y="192" width="184" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
-            <text x="490" y="228" class="vs-th" fill="#FF00FF" text-anchor="middle">跨组织协同</text>
+            <rect x="216" y="192" width="172" height="62" rx="7" fill="#01529A" stroke="#01529A" stroke-width="1"/>
+            <rect x="398" y="192" width="184" height="62" rx="7" fill="#014280" stroke="#014280" stroke-width="1"/>
+            <text x="490" y="228" class="vs-th" fill="#EFF6FD" text-anchor="middle">跨组织协同</text>
             <text x="620" y="216" class="vs-ts">链条层级</text>
             <text x="620" y="236" class="vs-ts">数据主权</text>
 
-            <rect x="34" y="272" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="34" y="272" width="172" height="62" rx="7" fill="#E6EAEF" stroke="#C2C8CE" stroke-width="1"/>
             <text x="50" y="296" class="vs-th">快消日化</text>
             <text x="50" y="316" class="vs-ts">预测 +39% · 交期 −75%</text>
-            <rect x="216" y="272" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
-            <rect x="398" y="272" width="184" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1" stroke-dasharray="5 4"/>
+            <rect x="216" y="272" width="172" height="62" rx="7" fill="#B4D4F9" stroke="#4B7DB7" stroke-width="1"/>
+            <rect x="398" y="272" width="184" height="62" rx="7" fill="#F3F5F8" stroke="#C2C8CE" stroke-width="1" stroke-dasharray="5 4"/>
             <text x="490" y="308" class="vs-ts" text-anchor="middle">尚未进入</text>
             <text x="620" y="296" class="vs-ts">需求侧倒逼</text>
             <text x="620" y="316" class="vs-ts">渠道为王</text>
@@ -1287,43 +1288,43 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
             </marker>
           </defs>
           <g>
-            <rect x="0" y="20" width="150" height="56" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="0" y="20" width="150" height="56" rx="7" fill="#E5F2FF" stroke="#C2C8CE" stroke-width="1"/>
             <text x="75" y="44" class="vs-th" text-anchor="middle">多源数据</text>
             <text x="75" y="62" class="vs-ts" text-anchor="middle">ERP · MES · 文档 · 群聊</text>
 
-            <path d="M158 48 L192 48" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
+            <path d="M158 48 L192 48" stroke="#84A1C3" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
 
-            <rect x="200" y="20" width="150" height="56" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
-            <text x="275" y="44" class="vs-th" fill="#FF0000" text-anchor="middle">权限闸门</text>
-            <text x="275" y="62" class="vs-ts" fill="#FF0000" text-anchor="middle">检索前生效</text>
+            <rect x="200" y="20" width="150" height="56" rx="7" fill="#9E2320" stroke="#AA2A27" stroke-width="1"/>
+            <text x="275" y="44" class="vs-th" fill="#FDF2F1" text-anchor="middle">权限闸门</text>
+            <text x="275" y="62" class="vs-ts" fill="#F1CEC9" text-anchor="middle">检索前生效</text>
 
-            <path d="M358 48 L392 48" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
+            <path d="M358 48 L392 48" stroke="#84A1C3" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
 
-            <rect x="400" y="20" width="150" height="56" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="400" y="20" width="150" height="56" rx="7" fill="#B4D4F9" stroke="#4B7DB7" stroke-width="1"/>
             <text x="475" y="44" class="vs-th" text-anchor="middle">语义组装</text>
             <text x="475" y="62" class="vs-ts" text-anchor="middle">按任务取用</text>
 
-            <path d="M558 48 L592 48" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
+            <path d="M558 48 L592 48" stroke="#84A1C3" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
 
-            <rect x="600" y="20" width="130" height="56" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
-            <text x="665" y="44" class="vs-th" fill="#00FF00" text-anchor="middle">Agent 执行</text>
-            <text x="665" y="62" class="vs-ts" fill="#00FF00" text-anchor="middle">受控执行</text>
+            <rect x="600" y="20" width="130" height="56" rx="7" fill="#006249" stroke="#006249" stroke-width="1"/>
+            <text x="665" y="44" class="vs-th" fill="#F1FBF7" text-anchor="middle">Agent 执行</text>
+            <text x="665" y="62" class="vs-ts" fill="#BFE0D2" text-anchor="middle">受控执行</text>
 
-            <path d="M665 82 L665 112 L75 112 L75 82" fill="none" stroke="#00FF00" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arw)"/>
-            <text x="370" y="130" class="vs-ts" fill="#00FF00" text-anchor="middle">产出沉淀回源 —— 上下文自我演化，而非一次性建设项目</text>
+            <path d="M665 82 L665 112 L75 112 L75 82" fill="none" stroke="#006B50" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arw)"/>
+            <text x="370" y="130" class="vs-ts" fill="#005B44" text-anchor="middle">产出沉淀回源 —— 上下文自我演化，而非一次性建设项目</text>
           </g>
 
-          <rect x="0" y="146" width="442" height="92" rx="8" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <rect x="0" y="146" width="442" height="92" rx="8" fill="#F3F5F8" stroke="#CCD2D7" stroke-width="1"/>
           <text x="18" y="170" class="vs-th">技术栈演进</text>
           <text x="18" y="192" class="vs-ts">基础 RAG → 智能体式 RAG → GraphRAG → 上下文压缩</text>
           <text x="18" y="212" class="vs-ts">GraphRAG 支持多跳查询，如"某设备该故障三年内的方案与备件消耗"</text>
-          <text x="18" y="230" class="vs-ts" fill="#FF00FF">纯向量检索几乎必然失败——答案不在单个文档里，在实体间的关系路径上</text>
+          <text x="18" y="230" class="vs-ts" fill="#335D8C">纯向量检索几乎必然失败——答案不在单个文档里，在实体间的关系路径上</text>
 
-          <rect x="458" y="146" width="442" height="92" rx="8" fill="#00FF00" stroke="#FFFF00" stroke-width="1"/>
-          <text x="476" y="170" class="vs-th" fill="#00FF00">成本塌缩：本轮最被低估的变量</text>
-          <text x="476" y="192" class="vs-ts" fill="#FFFF00">过去：约 10 天 · 约 100 万元　→　现在：约 3 天 · 约 5000 元</text>
-          <text x="476" y="212" class="vs-ts" fill="#FFFF00">直接决定中小企业能否进场（厂商披露口径，待核）</text>
-          <text x="476" y="230" class="vs-ts" fill="#FF0000">但办公口径能否外推到工业现场，仍是最大未验证项</text>
+          <rect x="458" y="146" width="442" height="92" rx="8" fill="#FFF1E2" stroke="#EDD2B5" stroke-width="1"/>
+          <text x="476" y="170" class="vs-th" fill="#7C4607">成本塌缩：本轮最被低估的变量</text>
+          <text x="476" y="192" class="vs-ts" fill="#684422">过去：约 10 天 · 约 100 万元　→　现在：约 3 天 · 约 5000 元</text>
+          <text x="476" y="212" class="vs-ts" fill="#684422">直接决定中小企业能否进场（厂商披露口径，待核）</text>
+          <text x="476" y="230" class="vs-ts" fill="#9E2320">但办公口径能否外推到工业现场，仍是最大未验证项</text>
         </svg>
         </div>
         <div class="fig-f">资料来源：千问办公 · AWS Context · 开沿科技 · 积墨AI 公开资料</div>
@@ -1335,35 +1336,35 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
         </div>
         <div class="fig-b">
 <svg viewBox="0 0 900 320" role="img" aria-label="工业知识六层架构，从数据层到应用层，TBOX本体层与ABOX实例层为核心">
-          <rect x="0" y="0" width="900" height="40" rx="6" fill="#00FF00" stroke="#FFFF00" stroke-width="1"/>
-          <text x="16" y="25" class="vs-th" fill="#00FF00">应用层</text>
-          <text x="90" y="25" class="vs-ts" fill="#FFFF00">智能检索 · 知识推荐 · 辅助问答 · 根因追溯</text>
+          <rect x="0" y="0" width="900" height="40" rx="6" fill="#FFF1E2" stroke="#EDD2B5" stroke-width="1"/>
+          <text x="16" y="25" class="vs-th" fill="#7C4607">应用层</text>
+          <text x="90" y="25" class="vs-ts" fill="#684422">智能检索 · 知识推荐 · 辅助问答 · 根因追溯</text>
 
-          <rect x="0" y="48" width="900" height="40" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <rect x="0" y="48" width="900" height="40" rx="6" fill="#E5F2FF" stroke="#C2C8CE" stroke-width="1"/>
           <text x="16" y="73" class="vs-th">服务层</text>
           <text x="90" y="73" class="vs-ts">图谱查询 API · 推理引擎 · GraphRAG 增强服务</text>
 
-          <rect x="0" y="96" width="442" height="66" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <rect x="0" y="96" width="442" height="66" rx="6" fill="#B4D4F9" stroke="#4B7DB7" stroke-width="1"/>
           <text x="18" y="122" class="vs-th">ABOX 层　实例存储</text>
           <text x="18" y="144" class="vs-ts">实体关系库 · 知识版本管理 · 实例图谱</text>
-          <text x="18" y="158" class="vs-ts" fill="#FF00FF">"实时业务图谱"</text>
+          <text x="18" y="158" class="vs-ts" fill="#335D8C">"实时业务图谱"</text>
 
-          <rect x="458" y="96" width="442" height="66" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
-          <text x="476" y="122" class="vs-th" fill="#FF00FF">TBOX 层　本体定义</text>
-          <text x="476" y="144" class="vs-ts" fill="#FF00FF">领域本体模型 · 语义约束校验 · Schema 库</text>
-          <text x="476" y="158" class="vs-ts" fill="#FF00FF">"统一语义骨架"</text>
+          <rect x="458" y="96" width="442" height="66" rx="6" fill="#033469" stroke="#033469" stroke-width="1"/>
+          <text x="476" y="122" class="vs-th" fill="#EFF6FD">TBOX 层　本体定义</text>
+          <text x="476" y="144" class="vs-ts" fill="#BBD4EE">领域本体模型 · 语义约束校验 · Schema 库</text>
+          <text x="476" y="158" class="vs-ts" fill="#BBD4EE">"统一语义骨架"</text>
 
-          <rect x="0" y="170" width="900" height="38" rx="6" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
-          <text x="16" y="194" class="vs-th" fill="#00FF00">构建层</text>
-          <text x="90" y="194" class="vs-ts" fill="#00FF00">实体抽取 · 关系抽取 · 规则映射 · 实体对齐消歧</text>
+          <rect x="0" y="170" width="900" height="38" rx="6" fill="#E3F5ED" stroke="#B2DCCB" stroke-width="1"/>
+          <text x="16" y="194" class="vs-th" fill="#00553F">构建层</text>
+          <text x="90" y="194" class="vs-ts" fill="#165440">实体抽取 · 关系抽取 · 规则映射 · 实体对齐消歧</text>
 
-          <rect x="0" y="216" width="900" height="38" rx="6" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <rect x="0" y="216" width="900" height="38" rx="6" fill="#F1F5F8" stroke="#CCD2D7" stroke-width="1"/>
           <text x="16" y="240" class="vs-th">数据层</text>
           <text x="90" y="240" class="vs-ts">结构化业务数据 · 非结构化文档 · 时序传感器数据流</text>
 
-          <rect x="0" y="264" width="900" height="46" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <rect x="0" y="264" width="900" height="46" rx="6" fill="#E6EAEF" stroke="#C2C8CE" stroke-width="1"/>
           <text x="16" y="284" class="vs-ts">双角色的意义：语义锚点（正向）解决"模型不知道对象指什么"；安全栅栏（反向）把幻觉关进规则笼子</text>
-          <text x="16" y="301" class="vs-ts" fill="#FF00FF">流程工业尤其关键——没有本体，"建议将塔顶温度上调 3℃" 无法回答"依据哪条工艺约束、哪条历史工况"</text>
+          <text x="16" y="301" class="vs-ts" fill="#335D8C">流程工业尤其关键——没有本体，"建议将塔顶温度上调 3℃" 无法回答"依据哪条工艺约束、哪条历史工况"</text>
         </svg>
         </div>
         <div class="fig-f">资料来源：卡奥斯 · 雪浪云 · 恒远科技 · 中新赛克公开技术资料</div>
@@ -1453,59 +1454,59 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
         <div class="fig-b">
 <svg viewBox="0 0 900 400" role="img" aria-label="八类工业AI应用范式的成熟度谱系，视觉感知型最高，具身执行型最低">
           <g>
-            <rect x="0" y="0" width="182" height="34" rx="6" fill="#00FF00"/>
-            <text x="14" y="22" class="vs-th" fill="#00FF00">视觉感知型</text>
+            <rect x="0" y="0" width="182" height="34" rx="6" fill="#006249"/>
+            <text x="14" y="22" class="vs-th" fill="#F1FBF7">视觉感知型</text>
             <text x="196" y="22" class="vs-ts">质检 99.7% · 检出 99.8%</text>
-            <text x="420" y="22" class="vs-ts" fill="#00FF00">成熟度最高 · 已成标配</text>
+            <text x="420" y="22" class="vs-ts" fill="#1A6A52">成熟度最高 · 已成标配</text>
 
-            <rect x="0" y="40" width="182" height="34" rx="6" fill="#00FF00"/>
-            <text x="14" y="62" class="vs-th" fill="#00FF00">知识工程型</text>
+            <rect x="0" y="40" width="182" height="34" rx="6" fill="#006249"/>
+            <text x="14" y="62" class="vs-th" fill="#F1FBF7">知识工程型</text>
             <text x="196" y="62" class="vs-ts">5 分钟生成全要素工艺方案</text>
-            <text x="420" y="62" class="vs-ts" fill="#00FF00">高 · ROI 最确定</text>
+            <text x="420" y="62" class="vs-ts" fill="#1A6A52">高 · ROI 最确定</text>
 
-            <rect x="0" y="80" width="182" height="34" rx="6" fill="#00FF00"/>
-            <text x="14" y="102" class="vs-th" fill="#00FF00">预测维护型</text>
+            <rect x="0" y="80" width="182" height="34" rx="6" fill="#006249"/>
+            <text x="14" y="102" class="vs-th" fill="#F1FBF7">预测维护型</text>
             <text x="196" y="102" class="vs-ts">停机 −20% · OEE +30%</text>
-            <text x="420" y="102" class="vs-ts" fill="#00FF00">高 · 收益可自动记录</text>
+            <text x="420" y="102" class="vs-ts" fill="#1A6A52">高 · 收益可自动记录</text>
 
-            <rect x="0" y="120" width="182" height="34" rx="6" fill="#00FF00"/>
-            <text x="14" y="142" class="vs-th" fill="#00FF00">优化决策型</text>
+            <rect x="0" y="120" width="182" height="34" rx="6" fill="#00654B"/>
+            <text x="14" y="142" class="vs-th" fill="#F1FBF7">优化决策型</text>
             <text x="196" y="142" class="vs-ts">8 秒完成万人排班</text>
-            <text x="420" y="142" class="vs-ts" fill="#00FF00">高 · 依赖跨系统数据同步</text>
+            <text x="420" y="142" class="vs-ts" fill="#11644C">高 · 依赖跨系统数据同步</text>
 
-            <rect x="0" y="160" width="182" height="34" rx="6" fill="#FF00FF"/>
-            <text x="14" y="182" class="vs-th" fill="#FF00FF">上下文供给型</text>
+            <rect x="0" y="160" width="182" height="34" rx="6" fill="#115BA4"/>
+            <text x="14" y="182" class="vs-th" fill="#F4F9FF">上下文供给型</text>
             <text x="196" y="182" class="vs-ts">本体 · GraphRAG · 上下文压缩</text>
-            <text x="420" y="182" class="vs-ts" fill="#FF00FF">中 · 使能底座</text>
+            <text x="420" y="182" class="vs-ts" fill="#335D8C">中 · 使能底座</text>
 
-            <rect x="0" y="200" width="182" height="34" rx="6" fill="#FF00FF"/>
-            <text x="14" y="222" class="vs-th" fill="#FF00FF">需求感知型</text>
+            <rect x="0" y="200" width="182" height="34" rx="6" fill="#115BA4"/>
+            <text x="14" y="222" class="vs-th" fill="#F4F9FF">需求感知型</text>
             <text x="196" y="222" class="vs-ts">15 渠道评价反哺产品定义</text>
-            <text x="420" y="222" class="vs-ts" fill="#FF00FF">中 · 快消与消费电子特有</text>
+            <text x="420" y="222" class="vs-ts" fill="#335D8C">中 · 快消与消费电子特有</text>
 
-            <rect x="0" y="240" width="182" height="34" rx="6" fill="#FF0000"/>
-            <text x="14" y="262" class="vs-th" fill="#FF0000">闭环控制型</text>
+            <rect x="0" y="240" width="182" height="34" rx="6" fill="#9E2320"/>
+            <text x="14" y="262" class="vs-th" fill="#FFF6F5">闭环控制型</text>
             <text x="196" y="262" class="vs-ts">零人工干预 · 模型自主率 95%</text>
-            <text x="420" y="262" class="vs-ts" fill="#FF0000">中 · 流程工业头部专属</text>
+            <text x="420" y="262" class="vs-ts" fill="#9E2320">中 · 流程工业头部专属</text>
 
-            <rect x="0" y="280" width="182" height="34" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="0" y="280" width="182" height="34" rx="6" fill="#E6EAEF" stroke="#C2C8CE" stroke-width="1"/>
             <text x="14" y="302" class="vs-th">具身执行型</text>
             <text x="196" y="302" class="vs-ts">百万级电机量产线实景验证</text>
-            <text x="420" y="302" class="vs-ts" fill="#FF00FF">低 · 从展台走向产线的分水岭</text>
+            <text x="420" y="302" class="vs-ts" fill="#757B82">低 · 从展台走向产线的分水岭</text>
           </g>
 
-          <line x1="0" y1="330" x2="900" y2="330" stroke="#FF00FF" stroke-width="1"/>
+          <line x1="0" y1="330" x2="900" y2="330" stroke="#DCE0E5" stroke-width="1"/>
 
           <text x="0" y="354" class="vs-th">自主度三级模型与产业实际位置</text>
-          <rect x="0" y="366" width="216" height="30" rx="6" fill="#00FF00"/>
-          <text x="108" y="385" class="vs-ts" fill="#00FF00" text-anchor="middle">L1 信息辅助 · 质检 预测 问答</text>
-          <path d="M222 381 L246 381" stroke="#00FF00" stroke-width="1.2" fill="none"/>
-          <path d="M246 381 l-6 -3.5 v7 z" fill="#00FF00"/>
-          <rect x="252" y="366" width="240" height="30" rx="6" fill="#00FF00"/>
-          <text x="372" y="385" class="vs-ts" fill="#FFFF00" text-anchor="middle">L2 受控执行 · 炼化闭环</text>
-          <path d="M498 381 L522 381" stroke="#FF00FF" stroke-width="1.2" fill="none"/>
-          <path d="M522 381 l-6 -3.5 v7 z" fill="#FF00FF"/>
-          <rect x="528" y="366" width="216" height="30" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <rect x="0" y="366" width="216" height="30" rx="6" fill="#006249"/>
+          <text x="108" y="385" class="vs-ts" fill="#F1FBF7" text-anchor="middle">L1 信息辅助 · 质检 预测 问答</text>
+          <path d="M222 381 L246 381" stroke="#A7610C" stroke-width="1.2" fill="none"/>
+          <path d="M246 381 l-6 -3.5 v7 z" fill="#915100"/>
+          <rect x="252" y="366" width="240" height="30" rx="6" fill="#915100"/>
+          <text x="372" y="385" class="vs-ts" fill="#FCF3EC" text-anchor="middle">L2 受控执行 · 炼化闭环</text>
+          <path d="M498 381 L522 381" stroke="#C2C8CE" stroke-width="1.2" fill="none"/>
+          <path d="M522 381 l-6 -3.5 v7 z" fill="#C2C8CE"/>
+          <rect x="528" y="366" width="216" height="30" rx="6" fill="#F1F5F8" stroke="#C2C8CE" stroke-width="1"/>
           <text x="636" y="385" class="vs-ts" text-anchor="middle">L3 自主优化 · 尚未出现</text>
         </svg>
         </div>
@@ -1553,37 +1554,37 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84
             </marker>
           </defs>
           <g>
-            <rect x="0" y="24" width="168" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="0" y="24" width="168" height="52" rx="7" fill="#E5F2FF" stroke="#C2C8CE" stroke-width="1"/>
             <text x="84" y="45" class="vs-th" text-anchor="middle">订阅 / 收益分成</text>
             <text x="84" y="64" class="vs-ts" text-anchor="middle">资本性支出转运营支出</text>
 
-            <path d="M172 50 L212 50" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
-            <rect x="218" y="24" width="152" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <path d="M172 50 L212 50" stroke="#84A1C3" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
+            <rect x="218" y="24" width="152" height="52" rx="7" fill="#E5F2FF" stroke="#C2C8CE" stroke-width="1"/>
             <text x="294" y="45" class="vs-th" text-anchor="middle">中小企业渗透</text>
             <text x="294" y="64" class="vs-ts" text-anchor="middle">前期投入门槛下降</text>
 
-            <path d="M374 50 L414 50" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
-            <rect x="420" y="24" width="152" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <path d="M374 50 L414 50" stroke="#84A1C3" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
+            <rect x="420" y="24" width="152" height="52" rx="7" fill="#E5F2FF" stroke="#C2C8CE" stroke-width="1"/>
             <text x="496" y="45" class="vs-th" text-anchor="middle">真实场景反馈</text>
             <text x="496" y="64" class="vs-ts" text-anchor="middle">模型持续迭代</text>
 
-            <path d="M576 50 L616 50" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
-            <rect x="622" y="24" width="152" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <path d="M576 50 L616 50" stroke="#84A1C3" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
+            <rect x="622" y="24" width="152" height="52" rx="7" fill="#B4D4F9" stroke="#4B7DB7" stroke-width="1"/>
             <text x="698" y="45" class="vs-th" text-anchor="middle">ROI 改善</text>
             <text x="698" y="64" class="vs-ts" text-anchor="middle">付费意愿上升</text>
 
-            <path d="M698 80 L698 100 L84 100 L84 80" fill="none" stroke="#FF00FF" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arw2)"/>
+            <path d="M698 80 L698 100 L84 100 L84 80" fill="none" stroke="#115BA4" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arw2)"/>
           </g>
 
-          <rect x="0" y="120" width="442" height="78" rx="8" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <rect x="0" y="120" width="442" height="78" rx="8" fill="#F3F5F8" stroke="#CCD2D7" stroke-width="1"/>
           <text x="18" y="144" class="vs-th">杠杆一 · 商业模式</text>
           <text x="18" y="166" class="vs-ts">订阅制把一次性大额投入切成可分摊的小额支出</text>
-          <text x="18" y="186" class="vs-ts" fill="#FF00FF">适配中小企业波动的订单与现金流</text>
+          <text x="18" y="186" class="vs-ts" fill="#335D8C">适配中小企业波动的订单与现金流</text>
 
-          <rect x="458" y="120" width="442" height="78" rx="8" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <rect x="458" y="120" width="442" height="78" rx="8" fill="#F3F5F8" stroke="#CCD2D7" stroke-width="1"/>
           <text x="476" y="144" class="vs-th">杠杆二 · 上下文成本塌缩</text>
           <text x="476" y="166" class="vs-ts">从"10 天 / 100 万"降至"3 天 / 5000 元"</text>
-          <text x="476" y="186" class="vs-ts" fill="#FF00FF">让语义前提第一次变得可负担</text>
+          <text x="476" y="186" class="vs-ts" fill="#335D8C">让语义前提第一次变得可负担</text>
         </svg>
         </div>
         <div class="fig-f">资料来源：千问办公 · 黑湖科技 · 中数睿智公开信息</div>
