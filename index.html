@@ -1,0 +1,2665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="制造业数字化与智能化：从覆盖到兑现的结构性拐点。渗透率与规模化的鸿沟、四行业差异、语义底座与大模型应用范式。">
+<title>制造业数字化与智能化 · 结构性鸿沟</title>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   制造业数字化与智能化 · 交互式网站
+   设计系统 —— 系统字体栈（离线可用）、双层密度、单一主色
+   ═══════════════════════════════════════════════════════════ */
+
+/* 兼容性层：oklch() / color-mix() 在旧版 Safari 不被支持。
+   先声明 hex 回退值，再声明 oklch —— 支持的浏览器会用后者覆盖，
+   不支持的（iOS 15 及以下）保留前者，页面不会因颜色失效而错乱。 */
+:root {
+  --paper:      #F8FAFD;
+  --surface:    #FFFFFF;
+  --surface-2:  #F1F4F8;
+  --surface-3:  #E7ECF0;
+  --ink:        #242D36;
+  --ink-2:      #55606B;
+  --ink-3:      #7A838D;
+  --primary:    #115BA4;
+  --primary-d:  #0C447C;
+  --primary-l:  #378ADD;
+  --primary-w:  #E6F1FB;
+  --accent:     #B07D1F;
+  --accent-w:   #FAF3E3;
+  --risk:       #AA2A27;
+  --risk-w:     #FBEDEC;
+  --ok:         #1D7A5F;
+  --ok-w:       #E8F4F0;
+  --line:       #E7ECF0;
+  --line-2:     #D5D9DF;
+}
+
+@supports (color: oklch(50% 0.1 250)) {
+  :root {
+    --paper:      oklch(98.5% 0.004 250);
+    --surface:    oklch(100% 0 0);
+    --surface-2:  oklch(96.8% 0.006 250);
+    --surface-3:  oklch(93.5% 0.008 250);
+    --ink:        oklch(24% 0.016 255);
+    --ink-2:      oklch(44% 0.015 255);
+    --ink-3:      oklch(52% 0.014 255);
+    --primary:    oklch(47% 0.135 253);
+    --primary-d:  oklch(33% 0.105 255);
+    --primary-l:  oklch(68% 0.09 252);
+    --primary-w:  oklch(95.5% 0.022 250);
+    --accent:     oklch(56% 0.125 62);
+    --accent-w:   oklch(96.5% 0.028 68);
+    --risk:       oklch(49% 0.165 27);
+    --risk-w:     oklch(96% 0.02 28);
+    --ok:         oklch(47% 0.105 168);
+    --ok-w:       oklch(95.5% 0.022 168);
+    --line:       oklch(90.5% 0.008 250);
+    --line-2:     oklch(83% 0.011 250);
+  }
+}
+
+  /* 字体 —— 全部系统字体，零外部依赖 */
+  --font-display: Georgia, "Songti SC", "STSong", "SimSun", serif;
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "SF Mono", "Menlo", Consolas, "Liberation Mono", monospace;
+
+  --maxw: 1180px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--primary); color: #fff; }
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── 可访问性：跳转链接 ─────────────────── */
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--primary); color: #fff; padding: 12px 20px; border-radius: 0 0 8px 0;
+}
+.skip:focus { left: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ── 顶栏 ───────────────────────────────── */
+.top {
+  position: sticky; top: 0; z-index: 60;
+  /* 老版 Safari 需要 -webkit- 前缀 */
+  -webkit-backdrop-filter: saturate(1.5) blur(14px);
+  backdrop-filter: saturate(1.5) blur(14px);
+  background: rgba(248, 250, 253, .92);
+  border-bottom: 1px solid var(--line);
+}
+@supports (color: oklch(50% 0.1 250)) {
+  .top {
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+  }
+}
+.top-in {
+  max-width: var(--maxw); margin: 0 auto; padding: 0 32px;
+  height: 58px; display: flex; align-items: center; gap: 24px;
+}
+.brand {
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .12em;
+  color: var(--primary); font-weight: 600; white-space: nowrap;
+}
+.nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  font-size: 13.5px; color: var(--ink-2); text-decoration: none;
+  padding: 6px 11px; border-radius: 6px; white-space: nowrap; transition: .16s;
+}
+.nav a:hover { background: var(--surface-2); color: var(--ink); text-decoration: none; }
+.nav a.active { color: var(--primary); background: var(--primary-w); }
+
+/* 可信度开关 */
+.trust {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  padding-left: 18px; border-left: 1px solid var(--line-2);
+}
+.trust-l {
+  font-size: 12px; color: var(--ink-3); white-space: nowrap;
+}
+.trust-sel {
+  font-family: var(--font-sans); font-size: 12.5px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 6px;
+  padding: 5px 8px; cursor: pointer;
+}
+.trust-sel:hover { border-color: var(--primary-l); }
+
+/* ── 通用版式 ───────────────────────────── */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
+
+section { padding: 96px 0; border-top: 1px solid var(--line); }
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--primary); font-weight: 500;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--line-2); }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.01em; }
+
+h2.sec {
+  font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.18;
+  margin-bottom: 20px; max-width: 20ch;
+}
+h2.sec.wide { max-width: none; }
+
+.lede {
+  font-size: 1.18rem; color: var(--ink-2); max-width: 62ch;
+  line-height: 1.75; margin-bottom: 20px;
+}
+.note { font-size: .88rem; color: var(--ink-3); line-height: 1.7; }
+
+h3 {
+  font-size: 1.55rem; line-height: 1.4; margin: 52px 0 16px;
+}
+h3:first-of-type { margin-top: 40px; }
+h4 { font-size: 1.02rem; font-weight: 700; margin: 30px 0 10px; line-height: 1.5; }
+
+p { max-width: 66ch; margin-bottom: 16px; color: var(--ink-2); font-size: 1.02rem; line-height: 1.78; }
+p strong { color: var(--ink); font-weight: 700; }
+p em { font-style: normal; color: var(--primary); font-weight: 700; }
+
+ul { max-width: 64ch; margin: 0 0 16px; padding-left: 0; list-style: none; }
+li { position: relative; padding-left: 22px; margin-bottom: 10px; color: var(--ink-2); font-size: 1rem; line-height: 1.75; }
+li::before { content: ""; position: absolute; left: 3px; top: .75em; width: 6px; height: 6px; border-radius: 2px; background: var(--primary-l); }
+
+.rule { width: 100%; height: 1px; background: var(--primary); margin: 0 0 32px; }
+
+/* ── 章节眉标（全篇统一母题） ─────────────── */
+.chap {
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em;
+  color: var(--primary); font-weight: 600; margin-bottom: 18px;
+  display: flex; align-items: baseline; gap: 14px;
+}
+.chap b { font-size: 20px; font-weight: 700; }
+.chap span { color: var(--ink-3); font-weight: 400; letter-spacing: .04em; }
+
+/* ── 可钻取数字 ─────────────────────────── */
+.fact {
+  cursor: pointer; border: none; border-bottom: 1.5px dotted var(--primary-l);
+  color: var(--primary); font-weight: 700; transition: .16s;
+  background: none; padding: 0 1px; font-family: inherit; font-size: inherit;
+  line-height: inherit;
+}
+/* 巨型数字内的可钻取项：不显示下划虚线，避免长线穿过版面 */
+.tension .fact,
+.giant .fact { border-bottom: none; }
+.tension .fact:hover,
+.giant .fact:hover { background: transparent; }
+.tension .fact::after,
+.giant .fact::after { display: none; }
+.tension .fact:focus-visible,
+.giant .fact:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+.fact::after {
+  content: ""; display: inline-block; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--primary-l); margin-left: 3px; vertical-align: super;
+}
+.fact.enterprise::after { background: var(--accent); }
+.fact.pending::after { background: var(--risk); }
+
+/* 可信度分层：降权而非隐藏 */
+body[data-trust="official"] .fact.enterprise,
+body[data-trust="official"] .fact.estimate,
+body[data-trust="research-only"] .fact.enterprise { opacity: .38; }
+body[data-trust="official"] .fact.enterprise:hover,
+body[data-trust="official"] .fact.estimate:hover,
+body[data-trust="research-only"] .fact.enterprise:hover { opacity: 1; }
+body[data-trust="official"] [data-kind-note="enterprise"],
+body[data-trust="research-only"] [data-kind-note="enterprise"] { display: block; }
+
+.trust-banner {
+  display: none; margin: 0 0 24px; padding: 11px 16px;
+  background: var(--primary-w); border-left: 3px solid var(--primary);
+  border-radius: 0 6px 6px 0; font-size: .88rem; color: var(--primary-d);
+}
+body[data-trust="official"] .trust-banner,
+body[data-trust="research-only"] .trust-banner { display: block; }
+
+/* ── 钻取浮层 ───────────────────────────── */
+.pop {
+  position: absolute; z-index: 100; width: 380px; max-width: calc(100vw - 32px);
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 10px;
+  padding: 20px 22px; box-shadow: 0 12px 32px rgba(20, 32, 48, .16);
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .18s var(--ease), transform .18s var(--ease);
+}
+.pop.on { opacity: 1; transform: none; pointer-events: auto; }
+.pop-v {
+  font-family: var(--font-mono); font-size: 26px; font-weight: 600;
+  color: var(--primary); line-height: 1.1; margin-bottom: 4px;
+}
+.pop-l { font-size: .93rem; color: var(--ink); font-weight: 700; margin-bottom: 14px; line-height: 1.5; }
+.pop-row { display: flex; gap: 10px; margin-bottom: 10px; font-size: .82rem; line-height: 1.6; }
+.pop-k { flex: 0 0 62px; color: var(--ink-3); font-weight: 700; }
+.pop-v2 { flex: 1; color: var(--ink-2); }
+.pop-tag {
+  display: inline-block; padding: 2px 9px; border-radius: 20px;
+  font-size: .74rem; font-weight: 700; margin-right: 6px;
+}
+.tag-official { background: var(--primary-w); color: var(--primary-d); }
+.tag-enterprise { background: var(--accent-w); color: var(--accent); }
+.tag-research { background: var(--ok-w); color: var(--ok); }
+.tag-estimate { background: var(--surface-2); color: var(--ink-2); }
+.tag-pending { background: var(--risk-w); color: var(--risk); }
+.pop-note {
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
+  font-size: .8rem; color: var(--ink-3); line-height: 1.65;
+}
+.pop-close {
+  position: absolute; top: 10px; right: 12px; background: none; border: none;
+  font-size: 20px; color: var(--ink-3); cursor: pointer; line-height: 1; padding: 4px;
+}
+.pop-close:hover { color: var(--ink); }
+
+/* ── 折叠区 ─────────────────────────────── */
+details.fold {
+  border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+  margin: 22px 0; overflow: hidden;
+}
+details.fold > summary {
+  cursor: pointer; padding: 15px 20px; font-size: .95rem; font-weight: 700;
+  color: var(--primary); list-style: none; display: flex; align-items: center; gap: 10px;
+  transition: background .16s;
+}
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary:hover { background: var(--primary-w); }
+details.fold > summary::before {
+  content: "＋"; font-family: var(--font-mono); font-size: 14px; color: var(--primary-l);
+  transition: transform .2s var(--ease);
+}
+details.fold[open] > summary::before { transform: rotate(45deg); }
+.fold-body { padding: 4px 20px 20px; border-top: 1px solid var(--line); }
+.fold-body p { font-size: .95rem; }
+.fold-body table { font-size: .88rem; }
+
+/* ── 表格 ───────────────────────────────── */
+.tbl-wrap {
+  margin: 26px 0; overflow-x: auto; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--surface);
+}
+table { border-collapse: collapse; width: 100%; font-size: .9rem; min-width: 680px; }
+th {
+  text-align: left; padding: 13px 16px; background: var(--surface-2);
+  font-weight: 700; font-size: .78rem; color: var(--ink-2); letter-spacing: .04em;
+  border-bottom: 1px solid var(--line-2); white-space: nowrap;
+}
+td { padding: 13px 16px; border-bottom: 1px solid var(--line); color: var(--ink-2); vertical-align: top; line-height: 1.65; }
+tr:last-child td { border-bottom: none; }
+td:first-child { font-weight: 700; color: var(--ink); white-space: nowrap; }
+td b { color: var(--primary-d); font-weight: 700; }
+
+/* ── 卡片 ───────────────────────────────── */
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 22px 24px;
+}
+.card.dark { background: var(--primary-d); border-color: var(--primary-d); }
+.card.dark h4 { color: #fff; }
+.card.dark p, .card.dark li { color: #C9DCEF; }
+
+/* ── 巨型数字 ───────────────────────────── */
+.giant {
+  font-family: var(--font-mono); font-weight: 700; letter-spacing: -.03em;
+  line-height: 1; color: var(--primary);
+}
+.giant.sm { font-size: 2.4rem; }
+.giant.md { font-size: 3.4rem; }
+.giant.lg { font-size: clamp(4.5rem, 9vw, 7.5rem); }
+.giant.xl { font-size: clamp(5.5rem, 11vw, 9rem); }
+.giant.gold { color: var(--accent); }
+
+/* ── 洞察卡 ─────────────────────────────── */
+.insights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 32px 0; }
+.ins {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 24px 26px; position: relative;
+}
+.ins::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--primary); border-radius: 10px 0 0 10px; }
+.ins-k {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--primary); font-weight: 600; margin-bottom: 10px;
+}
+.ins h4 { margin: 0 0 10px; font-size: 1.06rem; line-height: 1.5; }
+.ins p { margin: 0; font-size: .95rem; line-height: 1.75; }
+
+/* ── 图表 ───────────────────────────────── */
+.fig { margin: 36px 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.fig-h { padding: 22px 26px 18px; border-bottom: 1px solid var(--line); }
+.fig-h h4 { margin: 0 0 6px; font-size: 1.06rem; }
+.fig-h p { margin: 0; font-size: .86rem; color: var(--ink-3); line-height: 1.65; }
+.fig-b { padding: 26px; }
+.fig-f { padding: 12px 26px 16px; border-top: 1px solid var(--line); font-size: .78rem; color: var(--ink-3); font-family: var(--font-mono); }
+svg { display: block; width: 100%; height: auto; }
+.vs-th { font-family: var(--font-sans); font-size: 13px; font-weight: 700; fill: #242D36; }
+.vs-t { font-family: var(--font-sans); font-size: 12.5px; fill: #55606B; }
+.vs-ts { font-family: var(--font-sans); font-size: 11px; fill: #7A838D; }
+.vs-num { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+.vs-numl { font-family: var(--font-mono); font-size: 11px; font-weight: 500; }
+.vs-grid { stroke: #E7ECF0; stroke-width: 1; stroke-dasharray: 2 5; }
+.vs-axis { stroke: #D5D9DF; stroke-width: 1; }
+
+/* ── 首页 ───────────────────────────────── */
+.hero { padding: 100px 0 90px; border-top: none; }
+.hero-grid { display: grid; grid-template-columns: 1.25fr .85fr; gap: 70px; align-items: start; }
+.hero h1 {
+  font-size: clamp(2.4rem, 5.4vw, 4.3rem); line-height: 1.1;
+  letter-spacing: -.025em; margin-bottom: 28px;
+}
+.hero h1 em { font-style: normal; display: block; color: var(--primary); font-size: .42em; font-weight: 400; margin-top: 16px; letter-spacing: .01em; }
+.hero-sub { font-size: 1.2rem; color: var(--ink-2); max-width: 46ch; line-height: 1.75; margin-bottom: 34px; }
+.hero-meta {
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3);
+  line-height: 2.1; padding-top: 22px; border-top: 1px solid var(--line-2);
+}
+.hero-meta b { color: var(--ink-2); font-weight: 600; }
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+  border-radius: 8px; font-size: .96rem; font-weight: 700; cursor: pointer;
+  border: 1px solid var(--primary); background: var(--primary); color: #fff;
+  transition: .18s var(--ease); text-decoration: none;
+}
+.btn:hover { background: var(--primary-d); border-color: var(--primary-d); transform: translateY(-1px); text-decoration: none; }
+.btn.ghost { background: transparent; color: var(--primary); }
+.btn.ghost:hover { background: var(--primary-w); }
+
+/* 首页矛盾并置 */
+.tension { display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: center; margin: 48px 0 40px; }
+.tension-side { text-align: center; }
+.tension-l { font-size: .95rem; color: var(--ink-3); margin-bottom: 16px; font-weight: 700; }
+.tension-sub { font-size: .84rem; color: var(--ink-3); margin-top: 18px; }
+.tension-gap { text-align: center; }
+.tension-gap .vs { font-family: var(--font-mono); font-size: 1.5rem; color: var(--risk); font-weight: 700; }
+.tension-gap .lb { font-size: .8rem; color: var(--risk); margin-top: 8px; white-space: nowrap; }
+
+/* ── 论证链 ─────────────────────────────── */
+.chain { margin: 40px 0; }
+.chain-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.chain-step {
+  position: relative; background: var(--surface); border: 1px solid var(--line);
+  padding: 20px 22px; cursor: pointer; transition: .2s var(--ease); text-align: left;
+  font-family: inherit; width: 100%; border-radius: 0;
+}
+.chain-step:first-child { border-radius: 10px 0 0 10px; }
+.chain-step:last-child { border-radius: 0 10px 10px 0; }
+.chain-step:hover { background: var(--primary-w); border-color: var(--primary-l); z-index: 2; }
+.chain-step::after {
+  content: "›"; position: absolute; right: -9px; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; background: var(--paper); border: 1px solid var(--line-2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--primary); z-index: 3;
+}
+.chain-step:last-child::after { display: none; }
+.chain-n { font-family: var(--font-mono); font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 7px; }
+.chain-t { font-size: 1.06rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.4; }
+.chain-d { font-size: .86rem; color: var(--ink-2); line-height: 1.6; }
+.chain-out { margin-top: 16px; padding: 16px 20px; background: var(--surface-2); border-radius: 8px; font-size: .92rem; color: var(--ink-2); min-height: 52px; }
+.chain-out b { color: var(--ink); }
+
+/* ── 核心数字条 ─────────────────────────── */
+.nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin: 32px 0; }
+.num { background: var(--surface); padding: 24px 22px; }
+.num-v { font-family: var(--font-mono); font-size: 1.85rem; font-weight: 700; color: var(--primary); letter-spacing: -.03em; line-height: 1.15; display: block; margin-bottom: 8px; }
+.num-v small { font-size: .52em; font-weight: 600; letter-spacing: 0; }
+.num-l { font-size: .92rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.5; }
+.num-d { font-size: .82rem; color: var(--ink-3); line-height: 1.65; }
+
+/* ── 四行业矩阵（可切维度） ─────────────── */
+.matrix { margin: 36px 0; }
+.matrix-ctl { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.dim-btn {
+  padding: 8px 16px; border: 1px solid var(--line-2); background: var(--surface);
+  border-radius: 20px; font-size: .9rem; font-weight: 700; color: var(--ink-2);
+  cursor: pointer; transition: .16s; font-family: inherit;
+}
+.dim-btn:hover { border-color: var(--primary-l); color: var(--primary); }
+.dim-btn.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+.matrix-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.mcard {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 20px; display: flex; flex-direction: column; gap: 10px;
+  transition: .28s var(--ease); position: relative; overflow: hidden;
+}
+.mcard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-l); transition: .28s var(--ease); }
+.mcard.top::before { background: var(--accent); height: 5px; }
+.mcard-n { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: .08em; }
+.mcard-t { font-size: 1.16rem; font-weight: 700; color: var(--ink); line-height: 1.35; }
+.mcard-v { font-size: .92rem; color: var(--primary); font-weight: 700; line-height: 1.55; }
+.mcard-d { font-size: .85rem; color: var(--ink-3); line-height: 1.65; }
+.mcard-foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); font-size: .78rem; color: var(--ink-3); }
+.mcard-badge {
+  position: absolute; top: 14px; right: 14px; background: var(--accent-w); color: var(--accent);
+  font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 20px;
+}
+
+/* ── 范式自评器 ─────────────────────────── */
+.quiz { margin: 36px 0; }
+.quiz-rule {
+  padding: 24px 28px; background: var(--primary-w); border-left: 3px solid var(--primary);
+  border-radius: 0 10px 10px 0; margin-bottom: 26px;
+}
+.quiz-rule p { margin: 0; font-size: 1.1rem; color: var(--primary-d); line-height: 1.7; }
+.quiz-list { display: flex; flex-direction: column; gap: 10px; }
+.qrow {
+  display: grid; grid-template-columns: 190px 1fr auto; gap: 18px; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 16px 20px; transition: .2s;
+}
+.qrow.done { border-color: var(--primary-l); background: var(--primary-w); }
+.qhead { display: flex; flex-direction: column; gap: 4px; }
+.qname { font-size: .98rem; font-weight: 700; color: var(--ink); line-height: 1.35; }
+.qquestion { font-size: .84rem; color: var(--ink-3); line-height: 1.5; }
+.qopts { display: flex; gap: 7px; flex-wrap: wrap; }
+.qopt {
+  padding: 6px 13px; border: 1px solid var(--line-2); background: var(--surface);
+  border-radius: 6px; font-size: .84rem; cursor: pointer; color: var(--ink-2);
+  transition: .16s; font-family: inherit;
+}
+.qopt:hover { border-color: var(--primary-l); color: var(--primary); }
+.qopt.picked { background: var(--primary); border-color: var(--primary); color: #fff; }
+.qopt.correct { background: var(--ok); border-color: var(--ok); color: #fff; }
+.qopt.wrong { background: var(--risk); border-color: var(--risk); color: #fff; }
+.qres { font-size: .82rem; font-weight: 700; color: var(--ink-3); min-width: 76px; text-align: right; }
+.qrow.done .qres { color: var(--primary-d); }
+.quiz-out {
+  margin-top: 22px; padding: 22px 26px; background: var(--surface-2);
+  border-radius: 10px; font-size: .98rem; color: var(--ink-2); line-height: 1.75;
+}
+.quiz-out b { color: var(--ink); }
+.quiz-bar { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+.quiz-track { flex: 1; height: 6px; background: var(--surface-3); border-radius: 3px; overflow: hidden; }
+.quiz-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width .4s var(--ease); }
+
+/* ── 结论索引 ───────────────────────────── */
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+.fbtn {
+  padding: 7px 15px; border: 1px solid var(--line-2); background: var(--surface);
+  border-radius: 20px; font-size: .88rem; cursor: pointer; color: var(--ink-2);
+  transition: .16s; font-family: inherit;
+}
+.fbtn:hover { border-color: var(--primary-l); color: var(--primary); }
+.fbtn.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+.concl { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.citem { background: var(--surface); padding: 17px 20px; display: grid; grid-template-columns: 34px 1fr auto; gap: 14px; align-items: start; }
+.citem-n { font-family: var(--font-mono); font-size: 12px; color: var(--primary); font-weight: 700; padding-top: 3px; }
+.citem-t { font-size: .96rem; color: var(--ink-2); line-height: 1.7; }
+.citem-t b { color: var(--ink); }
+.citem-s { font-size: .78rem; color: var(--ink-3); font-family: var(--font-mono); white-space: nowrap; padding-top: 4px; }
+.citem.hidden { display: none; }
+
+/* ── 术语表 ─────────────────────────────── */
+.terms { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 26px 0; }
+.term { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 15px 18px; }
+.term-t { font-size: .92rem; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.term-p { font-size: .9rem; color: var(--primary); font-weight: 700; margin-bottom: 4px; }
+.term-n { font-size: .82rem; color: var(--ink-3); line-height: 1.6; }
+
+/* ── 术语内联提示 ───────────────────────── */
+.term-ref {
+  border-bottom: 1.5px dotted var(--primary-l); cursor: help; color: inherit;
+}
+.term-ref::after {
+  content: "?"; display: inline-flex; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--primary-w); color: var(--primary); font-size: 9px; font-weight: 700;
+  align-items: center; justify-content: center; margin-left: 3px; vertical-align: 1px;
+}
+
+/* ── 待核台账 ───────────────────────────── */
+.pending { border: 1px solid var(--risk); border-radius: 10px; overflow: hidden; margin: 26px 0; }
+.pending-row { display: grid; grid-template-columns: 30px 1fr 1fr 1fr; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--risk-w); font-size: .88rem; line-height: 1.6; background: var(--surface); }
+.pending-row:last-child { border-bottom: none; }
+.pending-h { background: var(--risk-w); font-weight: 700; color: var(--risk); font-size: .78rem; }
+.pending-n { font-family: var(--font-mono); color: var(--risk); font-weight: 700; }
+.pending-i { color: var(--ink); font-weight: 700; }
+.pending-w, .pending-n2 { color: var(--ink-3); }
+
+/* ── 角色条 ─────────────────────────────── */
+.roles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 28px 0; }
+.role { padding: 20px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.role-n { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; margin-bottom: 6px; }
+.role-d { font-size: .84rem; color: var(--ink-3); line-height: 1.6; }
+.role-p { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .05em; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--primary); }
+
+/* ── 案例 ───────────────────────────────── */
+.cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin: 28px 0; }
+.case { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+.case.fail { border-color: var(--risk); background: var(--risk-w); }
+.case-h { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.case-t { font-size: 1.04rem; font-weight: 700; color: var(--ink); }
+.case-badge { font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: var(--surface-2); color: var(--ink-2); }
+.case-badge.ok { background: var(--ok-w); color: var(--ok); }
+.case-badge.bad { background: var(--risk); color: #fff; }
+.case p { font-size: .92rem; margin-bottom: 10px; }
+.case:last-child p:last-child { margin-bottom: 0; }
+
+/* ── 页尾 ───────────────────────────────── */
+footer { border-top: 1px solid var(--line); padding: 46px 0 70px; font-size: .84rem; color: var(--ink-3); }
+.foot-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; }
+.foot-h { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--primary); font-weight: 600; margin-bottom: 12px; }
+.foot-list { list-style: none; padding: 0; }
+.foot-list li { font-size: .82rem; margin-bottom: 7px; padding-left: 0; line-height: 1.6; }
+.foot-list li::before { display: none; }
+.foot-list a { color: var(--ink-3); }
+.foot-list a:hover { color: var(--primary); }
+
+/* ── 响应式 ─────────────────────────────── */
+@media (max-width: 1080px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .matrix-grid { grid-template-columns: repeat(2, 1fr); }
+  .chain-row { grid-template-columns: repeat(2, 1fr); }
+  .chain-step:nth-child(2)::after { display: none; }
+  .chain-step:nth-child(1), .chain-step:nth-child(2) { border-radius: 10px 10px 0 0; }
+  .chain-step:nth-child(3), .chain-step:nth-child(4) { border-radius: 0 0 10px 10px; }
+  .chain-step:nth-child(2) { border-right: none; }
+  .chain-step:nth-child(3) { border-top: none; }
+  .chain-step:nth-child(4) { border-top: none; }
+  .nums { grid-template-columns: repeat(2, 1fr); }
+  .qrow { grid-template-columns: 1fr; gap: 10px; }
+  .qres { text-align: left; }
+}
+@media (max-width: 760px) {
+  .wrap { padding: 0 20px; }
+  .top-in { padding: 0 20px; gap: 14px; }
+  .brand, .trust-l { display: none; }
+  .trust { padding-left: 0; border-left: none; }
+  section { padding: 64px 0; }
+  .hero { padding: 60px 0; }
+  .insights, .matrix-grid, .cases, .terms, .foot-grid, .roles { grid-template-columns: 1fr; }
+  .chain-row { grid-template-columns: 1fr; }
+  .chain-step, .chain-step:first-child, .chain-step:last-child,
+  .chain-step:nth-child(1), .chain-step:nth-child(2), .chain-step:nth-child(3), .chain-step:nth-child(4) { border-radius: 0; border-top: none; }
+  .chain-step:first-child { border-radius: 10px 10px 0 0; border-top: 1px solid var(--line); }
+  .chain-step:last-child { border-radius: 0 0 10px 10px; }
+  .chain-step::after { display: none; }
+  .nums { grid-template-columns: 1fr; }
+  .tension { grid-template-columns: 1fr; gap: 20px; }
+  .tension-gap { order: 3; }
+  .pending-row { grid-template-columns: 1fr; gap: 5px; }
+  .pending-h { display: none; }
+  .pop { width: calc(100vw - 32px); }
+}
+
+@media print {
+  .top, .pop, .matrix-ctl, .filters, .quiz { display: none !important; }
+  body { background: #fff; }
+  section { padding: 24px 0; break-inside: avoid; }
+  .fig, .tbl-wrap, .ins, .mcard, .case, details.fold { break-inside: avoid; }
+  details.fold { border: 1px solid #ccc; }
+  details.fold > summary { color: #242D36; }
+  h2.sec, h3 { break-after: avoid; }
+  .fact { border-bottom: none; color: #242D36; }
+  .fact::after { display: none; }
+  .ins::before { display: none; }
+}
+
+</style>
+</head>
+<body data-trust="all">
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="top">
+  <div class="top-in">
+    <span class="brand">制造业数智化 · 2026</span>
+    <nav class="nav" aria-label="章节导航">
+      <a href="#core">核心矛盾</a>
+      <a href="#arc">论证链</a>
+      <a href="#ch1">宏观</a>
+      <a href="#ch2">四行业</a>
+      <a href="#ch3">语义底座</a>
+      <a href="#ch4">智能体</a>
+      <a href="#tools">结论</a>
+      <a href="#appendix">附录</a>
+    </nav>
+    <div class="trust">
+      <label class="trust-l" for="trust-sel">数据可信度</label>
+      <select class="trust-sel" id="trust-sel" aria-label="数据可信度分层">
+        <option value="all">全部数据</option>
+        <option value="official">仅官方统计</option>
+        <option value="research-only">官方 + 第三方研究</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ══════════════════ 首页 ══════════════════ -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">制造业数字化与智能化</div>
+          <h1>渗透率与规模化的<em>结构性鸿沟</em></h1>
+          <p class="hero-sub">
+            两年之内，中国制造业完成了智能工厂从三万五千家到十五家领航级的梯度培育，工业互联网实现四十一大类全覆盖。应用渗透率已经过半——但真正产生经营结果的，仍不到两成。
+          </p>
+          <p class="hero-sub">
+            这份材料不罗列成就，而是追问这道裂口从何而来、在四个行业里长成什么形状、以及究竟缺了什么。
+          </p>
+          <div class="hero-cta">
+            <a class="btn" href="#ch1">顺序阅读</a>
+            <a class="btn ghost" href="#tools">按主题查找</a>
+            <a class="btn ghost" href="#charts">图表索引</a>
+          </div>
+        </div>
+        <aside class="hero-meta">
+          <b>内容</b>　四篇正篇 · 约 5.4 万字<br>
+          <b>结构</b>　串联论证，非并列主题<br>
+          <b>数据</b>　官方 / 企业 / 研究三类分列<br>
+          <b>待核</b>　十五项已登记，见附录<br>
+          <b>编制</b>　2026 年 11 月
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 核心矛盾 ══════════════════ -->
+  <section id="core">
+    <div class="wrap">
+      <div class="eyebrow">核心矛盾</div>
+      <h2 class="sec wide">四成七的应用渗透，对应不足两成的规模化落地</h2>
+      <p class="lede">
+        这两个数字之间不是矛盾，而是漏斗。真正该追问的是：那三十二点五个百分点里，有多少会在下一年跨过规模化门槛？
+      </p>
+
+      <div class="tension">
+        <div class="tension-side">
+          <div class="tension-l">应用渗透率</div>
+          <div class="giant xl"><button class="fact" data-fact="penetration" style="color:inherit;font:inherit">47.5%</button></div>
+          <div class="tension-sub">一年内由 9.6% 跃升（IDC）</div>
+        </div>
+        <div class="tension-gap">
+          <div class="vs">↔</div>
+          <div class="lb">断点 32.5 个百分点</div>
+        </div>
+        <div class="tension-side">
+          <div class="tension-l">真正规模化落地</div>
+          <div class="giant xl gold"><button class="fact" data-fact="scaled" style="color:inherit;font:inherit">≈15%</button></div>
+          <div class="tension-sub">另有 47% 停在试验阶段（麦肯锡）</div>
+        </div>
+      </div>
+
+      <div class="nums">
+        <div class="num">
+          <span class="num-v">150<small>PB</small> ↔ 100<small>万token</small></span>
+          <div class="num-l">数据规模与上下文窗口的落差</div>
+          <div class="num-d">相差约八个数量级。企业缺的不是数据，是取用数据的能力。</div>
+        </div>
+        <div class="num">
+          <span class="num-v">2027</span>
+          <div class="num-l">政策 KPI 的验收节点</div>
+          <div class="num-d">一千个高水平工业智能体、一百个高质量数据集、五百个典型应用场景。</div>
+        </div>
+        <div class="num">
+          <span class="num-v">20<small>秒</small> ↔ 30<small>秒</small></span>
+          <div class="num-l">AI 质检成为必要条件的临界点</div>
+          <div class="num-d">产线节拍二十秒，传统人工检测需约三十秒。</div>
+        </div>
+        <div class="num">
+          <span class="num-v">1—2<small>年</small></span>
+          <div class="num-l">中小企业的预期回报周期</div>
+          <div class="num-d">回报率难以量化，是投入犹豫的根本原因。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 论证链 ══════════════════ -->
+  <section id="arc">
+    <div class="wrap">
+      <div class="eyebrow">论证结构</div>
+      <h2 class="sec wide">四篇是串联的，不是并列的</h2>
+      <p class="lede">
+        这决定了阅读顺序——缺一环，逻辑即不闭合。点击任一步查看该章结论。
+      </p>
+
+      <div class="chain">
+        <div class="chain-row">
+          <button class="chain-step" data-chain="0">
+            <div class="chain-n">01</div>
+            <div class="chain-t">宏观趋势与进展</div>
+            <div class="chain-d">提出矛盾</div>
+          </button>
+          <button class="chain-step" data-chain="1">
+            <div class="chain-n">02</div>
+            <div class="chain-t">四大细分产业剖析</div>
+            <div class="chain-d">展示矛盾的行业分布</div>
+          </button>
+          <button class="chain-step" data-chain="2">
+            <div class="chain-n">03</div>
+            <div class="chain-t">语义底座与上下文供给</div>
+            <div class="chain-d">补上前两篇共同默认的前提</div>
+          </button>
+          <button class="chain-step" data-chain="3">
+            <div class="chain-n">04</div>
+            <div class="chain-t">大模型与工业智能体</div>
+            <div class="chain-d">给出应用层答案</div>
+          </button>
+        </div>
+        <div class="chain-out" id="chain-out">
+          <b>提示：</b>四篇依次推进，任一环节缺失，后面结论的推导链就会断。点击上方任一步查看详细结论。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 第一章 ══════════════════ -->
+  <section id="ch1">
+    <div class="wrap">
+      <div class="chap"><b>01</b> <span>宏观趋势与进展</span></div>
+      <h2 class="sec wide">中国已完成覆盖，尚未完成兑现</h2>
+      <p class="lede">
+        八成四的研发设计工具普及率与六成六点八的关键工序数控化率，是广度指标。真正衡量深度的是单点场景能否归因到经营结果——而这恰恰是当前最缺的部分。
+      </p>
+
+      <h3>智能工厂的四级评价体系</h3>
+      <p>
+        梯度培育是中国路径最核心的抓手。它把"智能制造"从形容词变成了可清点的数字，也提供了观察产业升级速度的连续刻度。截至二〇二六年初，基础级 <b>3.5 万余家</b>、先进级 <b>8200 余家</b>、卓越级 <b>500 余家</b>，另有 <b>15 家</b>领航级工厂入选首批。
+      </p>
+      <p>
+        这 15 家的量化表现是：生产效率平均提升 <b>29%</b>、产品不良率降低 <b>47%</b>、AI 渗透 <b>70% 以上</b>业务场景、沉淀 6000 余个垂直领域模型、带动上下游 1300 多家企业协同升级。它们已从产品供应商转型为"产品+服务+解决方案"综合提供商。
+      </p>
+<div class="fig">
+        <div class="fig-h">
+          <h4>智能工厂四层梯度与领航级成效</h4>
+          <p>截至 2026 年初官方口径。15 家领航级工厂是首批遴选结果。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 300" role="img" aria-label="智能工厂四层梯度：基础级三万五千余家、先进级八千二百余家、卓越级五百余家、领航级十五家">
+          <g>
+            <rect x="0" y="222" width="196" height="56" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="16" y="245" class="vs-th">基础级</text>
+            <text x="16" y="265" class="vs-numl" fill="#FF00FF">3.5 万余家</text>
+
+            <rect x="212" y="166" width="196" height="112" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="228" y="192" class="vs-th">先进级</text>
+            <text x="228" y="216" class="vs-numl" fill="#FF00FF">8,200 余家</text>
+            <text x="228" y="240" class="vs-ts">规模化数字化</text>
+
+            <rect x="424" y="110" width="196" height="168" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="440" y="136" class="vs-th">卓越级</text>
+            <text x="440" y="160" class="vs-numl" fill="#FF00FF">500 余家</text>
+            <text x="440" y="184" class="vs-ts">行业标杆</text>
+
+            <rect x="636" y="20" width="264" height="258" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="656" y="50" class="vs-th" fill="#0000FF">领航级</text>
+            <text x="656" y="78" class="vs-num" fill="#FF00FF" font-size="19">15 家</text>
+            <text x="656" y="104" class="vs-ts" fill="#FF00FF">全球领先"中国样板"</text>
+            <line x1="656" y1="120" x2="884" y2="120" stroke="#FF00FF" stroke-width="1"/>
+            <text x="656" y="146" class="vs-ts" fill="#FF00FF">生产效率　+29%</text>
+            <text x="656" y="170" class="vs-ts" fill="#FF00FF">产品不良率　−47%</text>
+            <text x="656" y="194" class="vs-ts" fill="#FF00FF">AI 渗透　70%+ 场景</text>
+            <text x="656" y="218" class="vs-ts" fill="#FF00FF">垂直模型　6,000 余个</text>
+            <text x="656" y="242" class="vs-ts" fill="#FF00FF">带动上下游　1,300+ 家</text>
+            <text x="656" y="266" class="vs-ts" fill="#FF00FF">规模化应用　1,700+ 项</text>
+          </g>
+        </svg>
+        </div>
+        <div class="fig-f">数据来源：工业和信息化部 · 国新办发布会（2026年1月）</div>
+      </div>
+
+
+      <details class="fold">
+        <summary>展开：四层结构与领航级工厂画像</summary>
+        <div class="fold-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>层级</th><th>数量</th><th>定位</th><th>入选逻辑</th></tr></thead>
+              <tbody>
+                <tr><td>基础级</td><td>3.5 万余家</td><td>数字化转型达标线</td><td>基础规范符合</td></tr>
+                <tr><td>先进级</td><td>8200 余家</td><td>规模化数字化</td><td>综合能力达标</td></tr>
+                <tr><td>卓越级</td><td>500 余家</td><td>行业标杆</td><td>行业领先水平</td></tr>
+                <tr><td>领航级</td><td>15 家</td><td>全球领先"中国样板"</td><td>遴选制，代表全球最高水平</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">
+            领航级构成已覆盖汽车、家电、装备、流程工业等传统强项，也出现电池、化工、纺织等新领域。梯度培育的<b>评价标准与升降级机制未完整公开</b>，这是判断梯度质量的前置信息缺口。
+          </p>
+        </div>
+      </details>
+
+      <h3>政策：从"鼓励"到"可验收的承诺"</h3>
+      <p>
+        二〇二六年一月八部门《"人工智能+制造"专项行动实施意见》的意义不在于又一轮鼓励，而在于把数字化投入第一次变成了<strong>可证伪的量化命题</strong>。到二〇二七年，三个数字将被验收：<button class="fact" data-fact="kpiAgents">1000</button> 个高水平工业智能体、<button class="fact" data-fact="kpiDatasets">100</button> 个高质量数据集、<button class="fact" data-fact="kpiScenarios">500</button> 个典型应用场景。
+      </p>
+      <p>
+        配套三项此前政策所无的机制：<strong>模数共振行动</strong>（打通数据与模型的双向机制）、<strong>大小模型协同创新</strong>（行业大模型 + 工业细分场景小模型）、<strong>智能体分类分级管理体系</strong>。第三项尚未落地，但它是全领域最关键的待定标准——它将决定那 1000 个智能体的含金量。
+      </p>
+<div class="fig">
+        <div class="fig-h">
+          <h4>2027年五项量化目标与三级政策链</h4>
+          <p>配套三项此前政策所无的机制：模数共振行动、大小模型协同、智能体分类分级管理体系。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 260" role="img" aria-label="2027年五项量化KPI与中央部委地方三级政策链">
+          <g>
+            <rect x="0" y="0" width="168" height="72" rx="8" fill="#FF00FF"/>
+            <text x="84" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">1000</text>
+            <text x="84" y="55" class="vs-ts" fill="#FF00FF" text-anchor="middle">高水平工业智能体</text>
+
+            <rect x="184" y="0" width="168" height="72" rx="8" fill="#FF00FF"/>
+            <text x="268" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">100</text>
+            <text x="268" y="55" class="vs-ts" fill="#FF00FF" text-anchor="middle">工业高质量数据集</text>
+
+            <rect x="368" y="0" width="168" height="72" rx="8" fill="#FF00FF"/>
+            <text x="452" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">500</text>
+            <text x="452" y="55" class="vs-ts" fill="#FF00FF" text-anchor="middle">典型应用场景</text>
+
+            <rect x="552" y="0" width="168" height="72" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="636" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">3–5</text>
+            <text x="636" y="55" class="vs-ts" text-anchor="middle">通用大模型深度应用</text>
+
+            <rect x="736" y="0" width="164" height="72" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="818" y="34" class="vs-num" fill="#FF00FF" font-size="21" text-anchor="middle">1000</text>
+            <text x="818" y="55" class="vs-ts" text-anchor="middle">标杆企业</text>
+          </g>
+
+          <text x="0" y="106" class="vs-th">政策三级链条</text>
+          <g>
+            <rect x="0" y="120" width="270" height="60" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="16" y="145" class="vs-th">中央</text>
+            <text x="16" y="166" class="vs-ts">二十届四中全会 · "人工智能+"行动</text>
+
+            <path d="M280 150 L312 150" stroke="#FF00FF" stroke-width="1.2" fill="none"/>
+            <path d="M312 150 l-6 -3.5 v7 z" fill="#FF00FF"/>
+
+            <rect x="320" y="120" width="270" height="60" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="336" y="145" class="vs-th">部委</text>
+            <text x="336" y="166" class="vs-ts">八部门行动 + 行业实施方案</text>
+
+            <path d="M600 150 L632 150" stroke="#FF00FF" stroke-width="1.2" fill="none"/>
+            <path d="M632 150 l-6 -3.5 v7 z" fill="#FF00FF"/>
+
+            <rect x="640" y="120" width="260" height="60" rx="8" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="656" y="145" class="vs-th">地方</text>
+            <text x="656" y="166" class="vs-ts">上海：2028年推出 300 个高水平智能体</text>
+          </g>
+
+          <rect x="0" y="198" width="900" height="52" rx="8" fill="#00FF00" stroke="#FFFF00" stroke-width="1"/>
+          <text x="20" y="220" class="vs-th" fill="#00FF00">三项配套机制</text>
+          <text x="20" y="240" class="vs-ts" fill="#FFFF00">模数共振行动（数据协同—模型训练—应用开发—安全保障一体化）　·　大小模型协同创新　·　智能体分类分级管理体系</text>
+        </svg>
+        </div>
+        <div class="fig-f">数据来源：工业和信息化部等八部门《"人工智能+制造"专项行动实施意见》（2026年1月7日印发）</div>
+      </div>
+
+
+      <details class="fold">
+        <summary>展开：三级政策链条与配套机制</summary>
+        <div class="fold-body">
+          <ul>
+            <li><strong>中央</strong>　二十届四中全会部署"人工智能+"行动，明确促进制造业数智化转型</li>
+            <li><strong>部委</strong>　八部门专项行动（2026年1月）＋ 汽车行业数字化转型实施方案（2026年1月，含 8 项典型场景与场景清单）</li>
+            <li><strong>地方</strong>　上海"加快发展新一代智能制造行动"（2026年10月），提出到 2028 年推出 300 个高水平智能体；工信部"小快轻准"数字化产品培育指引（2026年7月）面向中小企业</li>
+          </ul>
+          <p class="note">
+            政策的模式转变值得单独标记：从"培育示范"转向"承诺 KPI + 分类分级管理 + 场景清单"。三个附件开始直接规定企业该做什么。
+          </p>
+        </div>
+      </details>
+
+      <h3>一个值得留意的反向信号</h3>
+      <p>
+        工信部《二〇二五年软件业运行情况》给出一组容易被忽略的数字：工业软件产品收入 <button class="fact" data-fact="industrialSW">3330 亿元</button>，在 15.48 万亿元软件业中仅占约 <button class="fact" data-fact="industrialSWRatio">2.2%</button>，增速 9.7% 也低于行业整体的 13.2%。
+      </p>
+      <p>
+        这与"工业软件是制造业数字化核心底座"的叙事形成张力——它提示工业软件仍处<strong>攻坚期</strong>而非收获期。（占比为基于官方口径的推算，非官方结论）
+      </p>
+<div class="fig">
+        <div class="fig-h">
+          <h4>应用渗透与规模化落地的落差</h4>
+          <p>左：工业大模型及智能体应用比例与规模化落地率。右：麦肯锡口径下制造业 AI 的阶段分布，以及 MIT 观察到的试点漏斗。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 320" role="img" aria-label="应用渗透率47.5%与规模化率15%的剪刀差，以及麦肯锡与MIT的漏斗分布">
+          <text x="0" y="16" class="vs-th">应用渗透 与 规模化落地</text>
+          <g>
+            <line x1="40" y1="122" x2="660" y2="122" class="vs-axis"/>
+            <text x="118" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">2024</text>
+            <rect x="78" y="101" width="80" height="21" rx="3" fill="#FF00FF"/>
+            <text x="118" y="142" class="vs-num" fill="#FF00FF" text-anchor="middle">9.6%</text>
+            <text x="118" y="160" class="vs-ts" text-anchor="middle">大模型及智能体应用</text>
+
+            <text x="278" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">2025</text>
+            <rect x="238" y="41" width="80" height="81" rx="3" fill="#FF00FF"/>
+            <text x="278" y="142" class="vs-num" fill="#FF00FF" text-anchor="middle">47.5%</text>
+            <text x="278" y="160" class="vs-ts" text-anchor="middle">大模型及智能体应用</text>
+
+            <text x="438" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">跨多环节</text>
+            <rect x="398" y="61" width="80" height="61" rx="3" fill="#FF00FF"/>
+            <text x="438" y="142" class="vs-num" fill="#FF00FF" text-anchor="middle">35%</text>
+            <text x="438" y="160" class="vs-ts" text-anchor="middle">多运营环节部署</text>
+
+            <text x="598" y="36" class="vs-numl" fill="#FF00FF" text-anchor="middle">规模化</text>
+            <rect x="558" y="96" width="80" height="26" rx="3" fill="#FF0000"/>
+            <text x="598" y="142" class="vs-num" fill="#FF0000" text-anchor="middle">≈15%</text>
+            <text x="598" y="160" class="vs-ts" text-anchor="middle">产生经营结果</text>
+
+            <path d="M318 61 L558 92" stroke="#FF0000" stroke-width="1.2" fill="none" stroke-dasharray="4 3"/>
+            <text x="438" y="196" class="vs-ts" fill="#FF0000" text-anchor="middle">断点</text>
+            <text x="438" y="212" class="vs-ts" fill="#FF0000" text-anchor="middle">32.5 个百分点</text>
+          </g>
+
+          <line x1="700" y1="0" x2="700" y2="220" stroke="#FF00FF" stroke-width="1"/>
+
+          <text x="730" y="16" class="vs-th">制造业 AI 阶段分布</text>
+          <rect x="730" y="30" width="126" height="26" rx="3" fill="#00FF00"/>
+          <text x="793" y="48" class="vs-ts" fill="#ffffff" text-anchor="middle">试验阶段 47%</text>
+          <rect x="856" y="30" width="44" height="26" fill="#00FF00"/>
+          <text x="878" y="48" class="vs-ts" fill="#ffffff" text-anchor="middle">31%</text>
+          <rect x="730" y="64" width="170" height="26" rx="3" fill="#FF0000"/>
+          <text x="815" y="82" class="vs-ts" fill="#ffffff" text-anchor="middle">真正规模化　15%</text>
+
+          <text x="730" y="122" class="vs-th">MIT：试点漏斗</text>
+          <rect x="730" y="136" width="82" height="24" rx="4" fill="#FF00FF"/>
+          <text x="771" y="152" class="vs-ts" fill="#ffffff" text-anchor="middle">在看 60%</text>
+          <text x="818" y="152" class="vs-ts" text-anchor="middle">→</text>
+          <rect x="832" y="136" width="50" height="24" rx="4" fill="#FF00FF"/>
+          <text x="857" y="152" class="vs-ts" fill="#ffffff" text-anchor="middle">20%</text>
+          <text x="857" y="176" class="vs-ts" text-anchor="middle">↓</text>
+          <rect x="832" y="184" width="50" height="24" rx="4" fill="#FF0000"/>
+          <text x="857" y="200" class="vs-ts" fill="#ffffff" text-anchor="middle">5%</text>
+          <text x="730" y="216" class="vs-ts">约 95% 试点无可测算回报</text>
+        </svg>
+        </div>
+        <div class="fig-f">数据来源：IDC · 麦肯锡《2025全球AI现状调研》· MIT Sloan</div>
+      </div>
+
+
+      <details class="fold">
+        <summary>展开：全球路线对照与 WEF 评选规则变更</summary>
+        <div class="fold-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>国家/地区</th><th>战略框架</th><th>核心逻辑</th><th>与中国的差异</th></tr></thead>
+              <tbody>
+                <tr><td>德国</td><td>工业4.0 → 欧盟工业5.0</td><td>标准化驱动；数字孪生；"国际制造-X"联合数据空间</td><td>押注数据主权与互操作</td></tr>
+                <tr><td>欧盟</td><td>工业5.0</td><td>韧性、以人为本、可持续</td><td>更强调可持续与人本指标</td></tr>
+                <tr><td>美国</td><td>再工业化</td><td>平台与算力算法优势；复杂系统协同仿真</td><td>更偏平台输出与算力竞争</td></tr>
+                <tr><td>日本</td><td>工业价值链参考架构</td><td>持续改善理念；重硬件、强边缘</td><td>更偏替代人力</td></tr>
+                <tr><td>中国</td><td>智能制造工程 + "人工智能+制造"</td><td>梯度培育 + 全面覆盖 + 政策动员</td><td>规模效应与推进能力最强</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            WEF 自 2025 年 9 月起把灯塔工厂评选重构为五类：客户至上、生产效率、供应链韧性、可持续、人才。这个变化的含义常被误读——它说明<strong>"综合最优工厂"这个概念已经失去区分度</strong>。当 AI 使各企业都能在单一维度做到极致，用单一榜单排序就不再有信息量。
+          </p>
+          <p class="note">
+            中国大陆以 <button class="fact pending" data-fact="lighthouseCN">103</button> 座约占全球 43%（238 座）。但评选需企业主动申报并接受审计，参与基数非中性——这个数字适合作为"中国头部企业已达全球较高水平"的证据，<b>不适合作为"中国制造业整体领先"的证据</b>。
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 第二章 ══════════════════ -->
+  <section id="ch2">
+    <div class="wrap">
+      <div class="chap"><b>02</b> <span>四大细分产业剖析</span></div>
+      <h2 class="sec wide">容错成本，决定 AI 走到哪一层</h2>
+      <p class="lede">
+        这四个行业覆盖了制造业数字化的四种极端形态。技术能力在它们之间差距不大——都用同一批大模型。但 AI 落地深度相差二至三倍量级。
+      </p>
+
+      <div class="card dark" style="margin:32px 0;padding:28px 32px">
+        <h4 style="color:#fff;margin-bottom:10px">贯穿四行业的一条主线</h4>
+        <p style="color:#C9DCEF;margin:0;font-size:1.06rem">
+          行业的"生产连续性"与"容错成本"，比"技术先进程度"更能解释 AI 介入的深度差异。技术能力差距不大，差距在企业敢把决策权交给 AI 到什么程度——一次非计划停工损失可达千万级的行业，反而更敢让 AI 进入闭环控制。
+        </p>
+      </div>
+
+      <h3>四行业对照 <span style="font-size:.86rem;color:var(--ink-3);font-family:var(--font-sans);font-weight:400">— 切换维度查看排序变化</span></h3>
+
+      <div class="matrix">
+        <div class="matrix-ctl" id="matrix-ctl">
+          <button class="dim-btn on" data-dim="depth">AI 介入深度</button>
+          <button class="dim-btn" data-dim="driver">转型驱动</button>
+          <button class="dim-btn" data-dim="bottleneck">主要瓶颈</button>
+          <button class="dim-btn" data-dim="bench">标杆企业</button>
+          <button class="dim-btn" data-dim="value">量化收益</button>
+        </div>
+        <div class="matrix-grid" id="matrix-grid"></div>
+        <p class="note" style="margin-top:16px">
+          金色顶边标记该维度上表现最突出的行业。切换维度时卡片会重新排序——注意排序的变化本身：深度维度下石化领先，而瓶颈维度下四者并列，说明深度的差异不来自约束条件本身。
+        </p>
+      </div>
+
+      <h3>AI 在四个行业分别扮演的角色</h3>
+      <div class="roles">
+        <div class="role">
+          <div class="role-n" style="color:var(--risk)">优化者</div>
+          <div class="role-d">在物理约束下求最优解</div>
+          <div class="role-p">石油化工</div>
+        </div>
+        <div class="role">
+          <div class="role-n" style="color:var(--accent)">替代者</div>
+          <div class="role-d">替代重复性劳动与人工判断</div>
+          <div class="role-p">消费电子</div>
+        </div>
+        <div class="role">
+          <div class="role-n" style="color:var(--primary)">协调者</div>
+          <div class="role-d">在多方之间调度资源</div>
+          <div class="role-p">汽车产业链</div>
+        </div>
+        <div class="role">
+          <div class="role-n" style="color:var(--ok)">感知者</div>
+          <div class="role-d">感知需求与消费者</div>
+          <div class="role-p">快消日化</div>
+        </div>
+      </div>
+<div class="fig">
+        <div class="fig-h">
+          <h4>四行业的 AI 介入深度与转型驱动</h4>
+          <p>横轴为 AI 介入的三层强度。虚线框表示尚未进入执行层。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 340" role="img" aria-label="四行业AI介入深度矩阵：石化进入闭环控制，消费电子进入核心工序，汽车处于跨组织协同，快消日化尚未进入执行层">
+          <text x="120" y="18" class="vs-ts" text-anchor="middle">感知层</text>
+          <text x="302" y="18" class="vs-ts" text-anchor="middle">决策层</text>
+          <text x="490" y="18" class="vs-ts" text-anchor="middle">执行层</text>
+
+          <g>
+            <rect x="34" y="32" width="172" height="62" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
+            <text x="50" y="56" class="vs-th" fill="#FF0000">石油化工</text>
+            <text x="50" y="76" class="vs-ts" fill="#FF0000">零人工干预 · 700 万</text>
+            <rect x="216" y="32" width="172" height="62" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
+            <rect x="398" y="32" width="184" height="62" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
+            <text x="490" y="68" class="vs-th" fill="#FF0000" text-anchor="middle">闭环控制</text>
+            <text x="620" y="56" class="vs-ts">安全 · 连续</text>
+            <text x="620" y="76" class="vs-ts">零容错</text>
+
+            <rect x="34" y="112" width="172" height="62" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
+            <text x="50" y="136" class="vs-th" fill="#FFFF00">消费电子</text>
+            <text x="50" y="156" class="vs-ts" fill="#00FF00">质检 99.7% · 20 秒</text>
+            <rect x="216" y="112" width="172" height="62" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
+            <rect x="398" y="112" width="184" height="62" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
+            <text x="490" y="148" class="vs-th" fill="#FFFF00" text-anchor="middle">核心工序</text>
+            <text x="620" y="136" class="vs-ts">精度 · 柔性</text>
+            <text x="620" y="156" class="vs-ts">复制</text>
+
+            <rect x="34" y="192" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="50" y="216" class="vs-th">汽车产业链</text>
+            <text x="50" y="236" class="vs-ts">上市速度 +44%</text>
+            <rect x="216" y="192" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="398" y="192" width="184" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="490" y="228" class="vs-th" fill="#FF00FF" text-anchor="middle">跨组织协同</text>
+            <text x="620" y="216" class="vs-ts">链条层级</text>
+            <text x="620" y="236" class="vs-ts">数据主权</text>
+
+            <rect x="34" y="272" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="50" y="296" class="vs-th">快消日化</text>
+            <text x="50" y="316" class="vs-ts">预测 +39% · 交期 −75%</text>
+            <rect x="216" y="272" width="172" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <rect x="398" y="272" width="184" height="62" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1" stroke-dasharray="5 4"/>
+            <text x="490" y="308" class="vs-ts" text-anchor="middle">尚未进入</text>
+            <text x="620" y="296" class="vs-ts">需求侧倒逼</text>
+            <text x="620" y="316" class="vs-ts">渠道为王</text>
+          </g>
+        </svg>
+        </div>
+        <div class="fig-f">数据来源：工信部 · WEF · 公开报道（企业效益数据均为企业自披露，未见第三方验证）</div>
+      </div>
+
+
+      <h3>案例：成功的边界在哪里</h3>
+      <p>
+        案例揭示的一个共同规律是：<strong>AI 的价值爆发点不在数据最多的地方，而在数据已经结构化、且结果可自动验证的地方。</strong>
+      </p>
+
+      <div class="cases">
+        <div class="case">
+          <div class="case-h">
+            <span class="case-t">海信视像 · 青岛显示工厂</span>
+            <span class="case-badge ok">AI 质检</span>
+          </div>
+          <p>
+            全球电视行业首家"客户至上"灯塔工厂。基于 26 万份高质量样本训练的检测平台，精度 <button class="fact enterprise" data-fact="hisense">99.7%</button>、检测效率提升 70.7%。产线 <button class="fact enterprise" data-fact="hisenseCycle">3—4 分钟</button>完成换款，200 多种型号混线生产。全链 AI 智造升级后生产效率 <button class="fact enterprise" data-fact="hisenseBenefit">+21%</button>，运营成本降 10.1%，碳排放减 12%。
+          </p>
+          <p class="note">
+            一个极具启发性的对比：传统电视生产中，检测 100—400 项不同产品需约 30 秒，而产线节拍是 <b>20 秒</b>。当生产节拍快于人工检测极限，AI 质检不是优化项，而是产线存亡条件。
+          </p>
+        </div>
+
+        <div class="case">
+          <div class="case-h">
+            <span class="case-t">中国石油 · 常减压装置</span>
+            <span class="case-badge ok">闭环控制</span>
+          </div>
+          <p>
+            昆仑数智联合阿里云打造的工业智能体，实现<button class="fact enterprise" data-fact="petroChemZero">零人工干预</button>并长期连续稳定运行，是国内首个进入炼化生产系统的工业级智能体。常减压工艺运行优化关键指标预测精度超过 95%，单套装置年经济效益 <button class="fact enterprise" data-fact="petroChem">700 余万元</button>。抽油机井工况诊断已在 8000 余口井应用，人均管井数由 <button class="fact enterprise" data-fact="wells">3.5→11.5 口</button>。
+          </p>
+          <p class="note">
+            为什么最严苛的行业反而最"敢"让 AI 控制？因为容错成本极高，企业会把功夫全花在前期验证上；离散场景的错误可返工，反而容易放松标准。
+          </p>
+        </div>
+
+        <div class="case">
+          <div class="case-h">
+            <span class="case-t">蔚来 · 合肥工厂</span>
+            <span class="case-badge ok">跨组织协同</span>
+          </div>
+          <p>
+            构建车端 AI、换电网络与数字孪生的实时闭环系统，管理 360 万余种车辆配置。上市速度 <button class="fact enterprise" data-fact="nio">+44%</button>，研发流程自动化 90%。
+          </p>
+          <p class="note">
+            汽车行业的独有难题是数据主权——整零之间"不愿交也不能交"。这正是"可用不可见"技术路线出现的根本来源，其他三个行业不存在同类问题。
+          </p>
+        </div>
+
+        <div class="case">
+          <div class="case-h">
+            <span class="case-t">联合利华 · 合肥配送中心</span>
+            <span class="case-badge ok">供应链韧性</span>
+          </div>
+          <p>
+            工厂直达消费者模式，31 项数字化用例中 65% 由 AI 与生成式 AI 驱动。预测准确率提升 39%，交期 <button class="fact enterprise" data-fact="unilever">-75%</button>，运营成本下降 24%。
+          </p>
+          <p class="note">
+            通道层级压缩后释放的利润去了哪里，是快消行业最值得追问的问题——它决定了渠道改革的可持续性。
+          </p>
+        </div>
+
+        <div class="case">
+          <div class="case-h">
+            <span class="case-t">宁德时代 · 宜宾基地</span>
+            <span class="case-badge ok">可持续</span>
+          </div>
+          <p>
+            全球最大电池生产基地。AI 驱动能源改造叠加微网光伏储能与低碳工艺，碳足迹 <button class="fact enterprise" data-fact="catl">-56%</button>，带动 13 家供应商获碳中和认证，Scope 1&2 排放降 16%，单位产出 Scope 3 降 45%。
+          </p>
+          <p class="note">
+            绿色合规正在从成本项变为市场准入项——欧盟电池法规与碳边境机制反向倒逼国内工厂数字化。
+          </p>
+        </div>
+
+        <div class="case fail">
+          <div class="case-h">
+            <span class="case-t">某辽宁制造企业</span>
+            <span class="case-badge bad">反例</span>
+          </div>
+          <p>
+            投入过亿元建成数字化生产线，硬件投完后订单、生产、质检、能耗系统互不连通，出现"自动化升级、效率降级"的困境。
+          </p>
+          <p>
+            <b>失败机制：</b>先建硬件后建数据底座，系统之间没有语义对齐，自动化设备产出的数据无法进入业务流程。这与第三章的核心论点互为印证——<strong>没有本体与上下文供给，数字化投入只是把低效流程用更贵的设备重新实现一遍。</strong>
+          </p>
+          <p class="note" style="color:var(--risk)">
+            该案例据公开报道整理，报道中以匿名方式呈现；此处保留其机制描述作为方法论的反面参照。
+          </p>
+        </div>
+      </div>
+
+      <details class="fold">
+        <summary>展开：快消日化的 AI 路径三分化</summary>
+        <div class="fold-body">
+          <p>快消与日化行业存在三条并行路径，其差异是结构性的而非程度性的：</p>
+          <ul>
+            <li><strong>重研发派</strong>（国际集团）——欧莱雅与 NVIDIA 合作原子级模拟提升配方研发效率；苏州工厂 UPX 二期智能车间；面向 6.7 万余名员工开展生成式 AI 培训。宝洁的 AI 自动化研发平台把配方验证周期从数月压缩至 <button class="fact enterprise" data-fact="ppg">1 周</button>。</li>
+            <li><strong>智造派</strong>（国货制造端）——上美股份 3 亿元智慧工厂日产能 <button class="fact enterprise" data-fact="smeg">20 万瓶</button>，30 台 AGV 配合产线 AI 叫料系统，AI 视觉检测每秒完成 20 次瑕疵筛查。珀莱雅湖州"未来工厂"融合 IoT 与 AI。</li>
+            <li><strong>效能派</strong>（营销与分销端）——橘宜集团"AI 下单 + AI 读单"系统用自然语言下单，自动识别 PDF/Excel/图片抽取产品信息生成订单。</li>
+          </ul>
+          <p>
+            <b>本报告判断：</b>这个分化在三至五年内会部分收敛，收敛点在研发而非营销。营销端 AI 能力已高度商品化，无法构成壁垒；而研发端需要配方数据、机理模型与实验验证的闭环，这恰是国货的短板。
+          </p>
+          <p class="note">
+            ⚠️ 需警惕行业现象：部分品牌以 AI 为营销噱头、宣称技术突破而缺乏实质投入。鉴别方法——查合作方性质、是否有基于 AI 研发成果的发明专利、是否获行业权威奖项。
+          </p>
+        </div>
+      </details>
+
+      <details class="fold">
+        <summary>展开：汽车行业政策要点与四行业横向对比表</summary>
+        <div class="fold-body">
+          <p>
+            四部门《汽车行业数字化转型实施方案》（2026年1月）是行业级首个详细实施方案，覆盖研发、生产、供应链、销售、服务五环节，提出八项典型场景。其中<strong>供应链智能协同</strong>场景最具分量——打造汽车行业数据空间，通过数据主权保护实现数据"可用不可见"，运用区块链存证实现全程可追溯。
+          </p>
+          <p>
+            零部件商侧的传导压力已经出现：头部整车企业对零部件的数字化要求已从"基础达标"转向"深度协同"，要求供应商提供实时数据接口、支持 OTA 升级与智驾算法迭代、引入区块链实现全流程可追溯。
+          </p>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>维度</th><th>汽车产业链</th><th>快消日化</th><th>消费电子</th><th>石油化工</th></tr></thead>
+              <tbody>
+                <tr><td>生产形态</td><td>离散装配，多车型混流</td><td>批量连续混合，SKU 爆炸</td><td>离散精密装配</td><td>流程连续，不可逆不可停</td></tr>
+                <tr><td>行业属性</td><td>长链条、层级深</td><td>需求驱动、渠道为王</td><td>精度 + 柔性 + 复制</td><td>安全 + 连续 + 零容错</td></tr>
+                <tr><td>最高价值环节</td><td>供应链整零协同</td><td>需求感知—柔性生产闭环</td><td>全球多基地能力复制</td><td>装置闭环控制与安全</td></tr>
+                <tr><td>AI 介入深度</td><td>中</td><td>浅—中</td><td>中—深</td><td>最深</td></tr>
+                <tr><td>主要瓶颈</td><td>数据主权与协同成本</td><td>ROI 归因难、噱头难辨</td><td>中小代工厂成本承受力</td><td>存量装置数据基础、安全合规</td></tr>
+                <tr><td>代表标杆</td><td>蔚来合肥、比亚迪、长安、吉利</td><td>宝洁、欧莱雅、联合利华、上美</td><td>海信视像、工业富联、立讯、宁德时代</td><td>镇海炼化、中科炼化、广西石化</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 第三章 ══════════════════ -->
+  <section id="ch3">
+    <div class="wrap">
+      <div class="chap"><b>03</b> <span>语义底座与上下文供给</span></div>
+      <h2 class="sec wide">没有本体，"跨系统协同"只是拼接</h2>
+      <p class="lede">
+        这是前两篇共同默认、却必须补上的前提。ERP 里叫"物料主数据 1002345"，MES 里叫"A3-铝板-3mm"，PLM 里叫"PN-88231"——无法对齐，协同就无从谈起。
+      </p>
+
+      <h3>企业上下文不是知识库</h3>
+      <p>
+        知识只是上下文的一部分；<strong>角色、权限、业务规则、流程状态、系统之间的关系</strong>同样构成 AI 理解企业不可缺少的背景。目标不是造一个"知道一切的大脑"，而是让 AI 对每次任务拿到足够、当前、可追溯、不越权的事实。
+      </p>
+      <p>
+        一个量级对照说明问题的紧迫性：中大型企业数据规模均值约 <button class="fact enterprise" data-fact="contextScale">150PB</button>，而当前最好的上下文窗口只有 <button class="fact enterprise" data-fact="contextWindow">100 万 token</button>，相差约八个数量级。<strong>企业缺的不是数据，是取用数据的能力。</strong>
+      </p>
+<div class="fig">
+        <div class="fig-h">
+          <h4>企业上下文的运行时供给回路与权限闸门</h4>
+          <p>权限校验必须发生在检索之前。产出的沉淀回源，使上下文自我演化，而非一次性建设。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 250" role="img" aria-label="企业上下文运行时供给回路：多源数据经权限闸门、语义组装到达Agent，产出沉淀回源">
+          <defs>
+            <marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+          <g>
+            <rect x="0" y="20" width="150" height="56" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="75" y="44" class="vs-th" text-anchor="middle">多源数据</text>
+            <text x="75" y="62" class="vs-ts" text-anchor="middle">ERP · MES · 文档 · 群聊</text>
+
+            <path d="M158 48 L192 48" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
+
+            <rect x="200" y="20" width="150" height="56" rx="7" fill="#FF0000" stroke="#FF0000" stroke-width="1"/>
+            <text x="275" y="44" class="vs-th" fill="#FF0000" text-anchor="middle">权限闸门</text>
+            <text x="275" y="62" class="vs-ts" fill="#FF0000" text-anchor="middle">检索前生效</text>
+
+            <path d="M358 48 L392 48" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
+
+            <rect x="400" y="20" width="150" height="56" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="475" y="44" class="vs-th" text-anchor="middle">语义组装</text>
+            <text x="475" y="62" class="vs-ts" text-anchor="middle">按任务取用</text>
+
+            <path d="M558 48 L592 48" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw)"/>
+
+            <rect x="600" y="20" width="130" height="56" rx="7" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
+            <text x="665" y="44" class="vs-th" fill="#00FF00" text-anchor="middle">Agent 执行</text>
+            <text x="665" y="62" class="vs-ts" fill="#00FF00" text-anchor="middle">受控执行</text>
+
+            <path d="M665 82 L665 112 L75 112 L75 82" fill="none" stroke="#00FF00" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arw)"/>
+            <text x="370" y="130" class="vs-ts" fill="#00FF00" text-anchor="middle">产出沉淀回源 —— 上下文自我演化，而非一次性建设项目</text>
+          </g>
+
+          <rect x="0" y="146" width="442" height="92" rx="8" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <text x="18" y="170" class="vs-th">技术栈演进</text>
+          <text x="18" y="192" class="vs-ts">基础 RAG → 智能体式 RAG → GraphRAG → 上下文压缩</text>
+          <text x="18" y="212" class="vs-ts">GraphRAG 支持多跳查询，如"某设备该故障三年内的方案与备件消耗"</text>
+          <text x="18" y="230" class="vs-ts" fill="#FF00FF">纯向量检索几乎必然失败——答案不在单个文档里，在实体间的关系路径上</text>
+
+          <rect x="458" y="146" width="442" height="92" rx="8" fill="#00FF00" stroke="#FFFF00" stroke-width="1"/>
+          <text x="476" y="170" class="vs-th" fill="#00FF00">成本塌缩：本轮最被低估的变量</text>
+          <text x="476" y="192" class="vs-ts" fill="#FFFF00">过去：约 10 天 · 约 100 万元　→　现在：约 3 天 · 约 5000 元</text>
+          <text x="476" y="212" class="vs-ts" fill="#FFFF00">直接决定中小企业能否进场（厂商披露口径，待核）</text>
+          <text x="476" y="230" class="vs-ts" fill="#FF0000">但办公口径能否外推到工业现场，仍是最大未验证项</text>
+        </svg>
+        </div>
+        <div class="fig-f">资料来源：千问办公 · AWS Context · 开沿科技 · 积墨AI 公开资料</div>
+      </div>
+<div class="fig">
+        <div class="fig-h">
+          <h4>工业知识的六层架构</h4>
+          <p>TBOX 为本体定义层，负责统一语义与约束；ABOX 为实例存储层，承载实时业务事实。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 320" role="img" aria-label="工业知识六层架构，从数据层到应用层，TBOX本体层与ABOX实例层为核心">
+          <rect x="0" y="0" width="900" height="40" rx="6" fill="#00FF00" stroke="#FFFF00" stroke-width="1"/>
+          <text x="16" y="25" class="vs-th" fill="#00FF00">应用层</text>
+          <text x="90" y="25" class="vs-ts" fill="#FFFF00">智能检索 · 知识推荐 · 辅助问答 · 根因追溯</text>
+
+          <rect x="0" y="48" width="900" height="40" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <text x="16" y="73" class="vs-th">服务层</text>
+          <text x="90" y="73" class="vs-ts">图谱查询 API · 推理引擎 · GraphRAG 增强服务</text>
+
+          <rect x="0" y="96" width="442" height="66" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <text x="18" y="122" class="vs-th">ABOX 层　实例存储</text>
+          <text x="18" y="144" class="vs-ts">实体关系库 · 知识版本管理 · 实例图谱</text>
+          <text x="18" y="158" class="vs-ts" fill="#FF00FF">"实时业务图谱"</text>
+
+          <rect x="458" y="96" width="442" height="66" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <text x="476" y="122" class="vs-th" fill="#FF00FF">TBOX 层　本体定义</text>
+          <text x="476" y="144" class="vs-ts" fill="#FF00FF">领域本体模型 · 语义约束校验 · Schema 库</text>
+          <text x="476" y="158" class="vs-ts" fill="#FF00FF">"统一语义骨架"</text>
+
+          <rect x="0" y="170" width="900" height="38" rx="6" fill="#00FF00" stroke="#00FF00" stroke-width="1"/>
+          <text x="16" y="194" class="vs-th" fill="#00FF00">构建层</text>
+          <text x="90" y="194" class="vs-ts" fill="#00FF00">实体抽取 · 关系抽取 · 规则映射 · 实体对齐消歧</text>
+
+          <rect x="0" y="216" width="900" height="38" rx="6" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <text x="16" y="240" class="vs-th">数据层</text>
+          <text x="90" y="240" class="vs-ts">结构化业务数据 · 非结构化文档 · 时序传感器数据流</text>
+
+          <rect x="0" y="264" width="900" height="46" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <text x="16" y="284" class="vs-ts">双角色的意义：语义锚点（正向）解决"模型不知道对象指什么"；安全栅栏（反向）把幻觉关进规则笼子</text>
+          <text x="16" y="301" class="vs-ts" fill="#FF00FF">流程工业尤其关键——没有本体，"建议将塔顶温度上调 3℃" 无法回答"依据哪条工艺约束、哪条历史工况"</text>
+        </svg>
+        </div>
+        <div class="fig-f">资料来源：卡奥斯 · 雪浪云 · 恒远科技 · 中新赛克公开技术资料</div>
+      </div>
+
+
+      <details class="fold">
+        <summary>展开：上下文供给回路与权限闸门</summary>
+        <div class="fold-body">
+          <p>
+            上下文供给的技术栈已从基础 RAG 演进到 GraphRAG 与上下文压缩。GraphRAG 的工业价值在于支持多跳查询——例如"某设备的某故障在过去三年间的解决方案与备件消耗"，这类问题用纯向量检索几乎必然失败，因为答案不在单个文档里，而在实体间的关系路径上。
+          </p>
+          <p>
+            但其中有一条硬约束常被忽略：<strong>权限必须在检索之前生效</strong>，而不是先召回敏感内容再遮字——遮字本身可能遗漏变体，敏感信息已进入模型上下文即可被后续提示提取，且审计日志会记录"曾经召回过"。
+          </p>
+          <p class="note">
+            治理缺口：企业上下文基础设施尚未像数据库一样形成成熟标准。这带来两种走向——标准形成则生态繁荣、上下文成为可移植资产；各家私有格式则导致供应商锁定。阿里方面主张"企业整理好的上下文应属于企业自己，以便未来切换 Agent 时继续调用"。
+          </p>
+        </div>
+      </details>
+
+      <h3>本体不是新概念，但本轮的判据不同</h3>
+      <p>
+        工业本体已有二十余年历史（ISO 15926、STEP、IEC 62264/ISA-95），上一轮失败率高，通病是过度工程化、建模成本高、ROI 难证。因此本报告<strong>不引用以咨询交付为核心的本体叙事作为正面参照</strong>。
+      </p>
+      <p>
+        真正需要证成的命题是：<strong>大模型是否把本体从"人工建模的前置负担"变成了"可自动构建、可被模型消费、可持续演化的资产"</strong>。若成立，是范式转变；若不成立，本体仍将是少数头部企业的奢侈品。
+      </p>
+
+      <details class="fold">
+        <summary>展开：工业本体承担的双重角色</summary>
+        <div class="fold-body">
+          <p>本体的价值有两个方向相反的作用：</p>
+          <ul>
+            <li><strong>语义锚点（正向）</strong>——解决"模型不知道业务对象指什么"，把隐性业务规则变成可计算约束</li>
+            <li><strong>安全栅栏（反向）</strong>——解决"模型可能胡说"，用领域规则把生成范围关进笼子</li>
+          </ul>
+          <p>
+            第二重角色在流程工业尤其关键。石化要求 AI 可解释、实时、容错近乎为零，而可解释性要求模型能回答"依据哪条工艺约束、哪条历史工况"——没有本体，这个答案无法生成。
+          </p>
+          <p>
+            治理机制是上一轮最常缺失的一环：设立本体治理委员会（变更需业务与技术联合评审）、设置知识管家岗位并将知识贡献与质量评估纳入绩效、采用"自顶向下搭骨架 + 自底向上持续迭代"的双向融合策略。
+          </p>
+        </div>
+      </details>
+
+      <h3>成本塌缩：本轮最被低估的变量</h3>
+      <p>
+        建设一套智能体可用的企业上下文，成本从 <button class="fact enterprise pending" data-fact="contextCostOld">10 天 / 100 万元</button> 降至 <button class="fact enterprise pending" data-fact="contextCostNew">3 天 / 5000 元</button>。这个幅度若成立，直接决定中小企业能否进场——此前"上下文工程"是头部企业专属。
+      </p>
+      <p>
+        <strong>但必须警惕：</strong>这是办公场景口径，能否外推到涉及实时设备数据、工艺约束与安全边界的工业现场，是最大的未验证项。流程工业还有一层额外约束——工信部调研显示国内炼化装置平均服役 <button class="fact" data-fact="refineryAge">15 年</button>，相当比例存量设备未预置数据采集接口。
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 第四章 ══════════════════ -->
+  <section id="ch4">
+    <div class="wrap">
+      <div class="chap"><b>04</b> <span>大模型与工业智能体</span></div>
+      <h2 class="sec wide">成熟度，由结果能否被自动验证决定</h2>
+      <p class="lede">
+        这是一条反直觉但极有操作价值的规律。视觉感知型技术难度并不最高，却最成熟；闭环控制技术难度最高，却只在流程工业头部验证。区别不在难度，在结果是否可被自动验证。
+      </p>
+
+      <h3>八类应用范式</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>范式</th><th>核心能力</th><th>成熟度</th><th>代表</th></tr></thead>
+          <tbody>
+            <tr><td>视觉感知型</td><td>AI 质检与缺陷识别</td><td>最高 · 已成标配</td><td>海信 26 万样本检测、立讯检出率 99.8%</td></tr>
+            <tr><td>知识工程型</td><td>把专家经验变成可复用资产</td><td>高 · ROI 最确定</td><td>海信工艺方案、黑湖图纸解析</td></tr>
+            <tr><td>预测维护型</td><td>设备故障与非计划停机</td><td>高 · 收益可自动记录</td><td>石化预测性维护、美的 TPM</td></tr>
+            <tr><td>优化决策型</td><td>排产、调度、库存</td><td>高但有条件</td><td>AI 排产、联想排班</td></tr>
+            <tr><td>上下文供给型</td><td>按任务组装上下文</td><td>中 · 使能底座</td><td>本体、GraphRAG、企业上下文</td></tr>
+            <tr><td>需求感知型</td><td>消费端数据反向定义制造</td><td>中 · 快消与消费电子特有</td><td>海信 15 渠道评价反哺</td></tr>
+            <tr><td>闭环控制型</td><td>AI 直接进生产控制回路</td><td>中 · 流程工业头部专属</td><td>昆仑炼化智能体、数智建材</td></tr>
+            <tr><td>具身执行型</td><td>智能体驱动物理实体</td><td>低 · 从展台走向产线</td><td>具识智能、华域电动人形协同</td></tr>
+          </tbody>
+        </table>
+      </div>
+<div class="fig">
+        <div class="fig-h">
+          <h4>八类应用范式的成熟度谱系</h4>
+          <p>底座型范式（上下文供给）不直接产生业务价值，但决定了其余七类的实际上限。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 400" role="img" aria-label="八类工业AI应用范式的成熟度谱系，视觉感知型最高，具身执行型最低">
+          <g>
+            <rect x="0" y="0" width="182" height="34" rx="6" fill="#00FF00"/>
+            <text x="14" y="22" class="vs-th" fill="#00FF00">视觉感知型</text>
+            <text x="196" y="22" class="vs-ts">质检 99.7% · 检出 99.8%</text>
+            <text x="420" y="22" class="vs-ts" fill="#00FF00">成熟度最高 · 已成标配</text>
+
+            <rect x="0" y="40" width="182" height="34" rx="6" fill="#00FF00"/>
+            <text x="14" y="62" class="vs-th" fill="#00FF00">知识工程型</text>
+            <text x="196" y="62" class="vs-ts">5 分钟生成全要素工艺方案</text>
+            <text x="420" y="62" class="vs-ts" fill="#00FF00">高 · ROI 最确定</text>
+
+            <rect x="0" y="80" width="182" height="34" rx="6" fill="#00FF00"/>
+            <text x="14" y="102" class="vs-th" fill="#00FF00">预测维护型</text>
+            <text x="196" y="102" class="vs-ts">停机 −20% · OEE +30%</text>
+            <text x="420" y="102" class="vs-ts" fill="#00FF00">高 · 收益可自动记录</text>
+
+            <rect x="0" y="120" width="182" height="34" rx="6" fill="#00FF00"/>
+            <text x="14" y="142" class="vs-th" fill="#00FF00">优化决策型</text>
+            <text x="196" y="142" class="vs-ts">8 秒完成万人排班</text>
+            <text x="420" y="142" class="vs-ts" fill="#00FF00">高 · 依赖跨系统数据同步</text>
+
+            <rect x="0" y="160" width="182" height="34" rx="6" fill="#FF00FF"/>
+            <text x="14" y="182" class="vs-th" fill="#FF00FF">上下文供给型</text>
+            <text x="196" y="182" class="vs-ts">本体 · GraphRAG · 上下文压缩</text>
+            <text x="420" y="182" class="vs-ts" fill="#FF00FF">中 · 使能底座</text>
+
+            <rect x="0" y="200" width="182" height="34" rx="6" fill="#FF00FF"/>
+            <text x="14" y="222" class="vs-th" fill="#FF00FF">需求感知型</text>
+            <text x="196" y="222" class="vs-ts">15 渠道评价反哺产品定义</text>
+            <text x="420" y="222" class="vs-ts" fill="#FF00FF">中 · 快消与消费电子特有</text>
+
+            <rect x="0" y="240" width="182" height="34" rx="6" fill="#FF0000"/>
+            <text x="14" y="262" class="vs-th" fill="#FF0000">闭环控制型</text>
+            <text x="196" y="262" class="vs-ts">零人工干预 · 模型自主率 95%</text>
+            <text x="420" y="262" class="vs-ts" fill="#FF0000">中 · 流程工业头部专属</text>
+
+            <rect x="0" y="280" width="182" height="34" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="14" y="302" class="vs-th">具身执行型</text>
+            <text x="196" y="302" class="vs-ts">百万级电机量产线实景验证</text>
+            <text x="420" y="302" class="vs-ts" fill="#FF00FF">低 · 从展台走向产线的分水岭</text>
+          </g>
+
+          <line x1="0" y1="330" x2="900" y2="330" stroke="#FF00FF" stroke-width="1"/>
+
+          <text x="0" y="354" class="vs-th">自主度三级模型与产业实际位置</text>
+          <rect x="0" y="366" width="216" height="30" rx="6" fill="#00FF00"/>
+          <text x="108" y="385" class="vs-ts" fill="#00FF00" text-anchor="middle">L1 信息辅助 · 质检 预测 问答</text>
+          <path d="M222 381 L246 381" stroke="#00FF00" stroke-width="1.2" fill="none"/>
+          <path d="M246 381 l-6 -3.5 v7 z" fill="#00FF00"/>
+          <rect x="252" y="366" width="240" height="30" rx="6" fill="#00FF00"/>
+          <text x="372" y="385" class="vs-ts" fill="#FFFF00" text-anchor="middle">L2 受控执行 · 炼化闭环</text>
+          <path d="M498 381 L522 381" stroke="#FF00FF" stroke-width="1.2" fill="none"/>
+          <path d="M522 381 l-6 -3.5 v7 z" fill="#FF00FF"/>
+          <rect x="528" y="366" width="216" height="30" rx="6" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+          <text x="636" y="385" class="vs-ts" text-anchor="middle">L3 自主优化 · 尚未出现</text>
+        </svg>
+        </div>
+        <div class="fig-f">数据来源：中国工业互联网研究院《工业智能体发展报告》· IDC · 各企业公开案例</div>
+      </div>
+
+
+      <h3>自己判断一次</h3>
+      <p>
+        下面这条规律是全篇最反直觉、也最有操作价值的判断。与其直接告诉你结论，不如自己走一遍——<strong>你的判断与真实判据偏差最大的那一类，就是最值得展开理解的。</strong>
+      </p>
+
+      <div class="quiz" id="quiz">
+        <div class="quiz-rule">
+          <p>
+            对每一类范式，选择你认为决定其成熟度的<b>主要因素</b>。完成后系统揭晓真实判据，并标出偏差最大的项。
+          </p>
+        </div>
+        <div class="quiz-list" id="quiz-list"></div>
+        <div class="quiz-bar">
+          <div class="quiz-track"><div class="quiz-fill" id="quiz-fill" style="width:0%"></div></div>
+          <span class="note" id="quiz-count" style="font-family:var(--font-mono)">0 / 8</span>
+          <button class="btn ghost" id="quiz-reset" style="padding:7px 16px;font-size:.85rem">重新作答</button>
+        </div>
+        <div class="quiz-out" id="quiz-out" style="display:none"></div>
+      </div>
+
+      <h3>三级自主度：产业实际处在哪一层</h3>
+      <p>
+        中国工业互联网研究院的判断是三个转向：从"系统功能驱动"到"业务任务驱动"、从"单点优化"到"跨系统协同"、从"信息辅助"到"受控执行"。对应到自主度，产业正处在 <strong>L1 信息辅助向 L2 受控执行的过渡期</strong>——"落地元年"这个说法，更多指形态出现而非效果普及。
+      </p>
+      <p>
+        L2 到 L3 的三个门槛已经清楚：可信度（长周期运行中的置信度能否维持）、可验证性（AI 决策能否被自动验证——离散场景容易，连续流程场景极难）、容错设计（错误时的自动降级与人工接管）。
+      </p>
+<div class="fig">
+        <div class="fig-h">
+          <h4>商业模式正向循环与两条并行杠杆</h4>
+          <p>订阅制与上下文成本塌缩，是打开中小企业准入的两条杠杆。</p>
+        </div>
+        <div class="fig-b">
+<svg viewBox="0 0 900 210" role="img" aria-label="商业模式正向循环与两条并行杠杆">
+          <defs>
+            <marker id="arw2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+          <g>
+            <rect x="0" y="24" width="168" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="84" y="45" class="vs-th" text-anchor="middle">订阅 / 收益分成</text>
+            <text x="84" y="64" class="vs-ts" text-anchor="middle">资本性支出转运营支出</text>
+
+            <path d="M172 50 L212 50" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
+            <rect x="218" y="24" width="152" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="294" y="45" class="vs-th" text-anchor="middle">中小企业渗透</text>
+            <text x="294" y="64" class="vs-ts" text-anchor="middle">前期投入门槛下降</text>
+
+            <path d="M374 50 L414 50" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
+            <rect x="420" y="24" width="152" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="496" y="45" class="vs-th" text-anchor="middle">真实场景反馈</text>
+            <text x="496" y="64" class="vs-ts" text-anchor="middle">模型持续迭代</text>
+
+            <path d="M576 50 L616 50" stroke="#FF00FF" stroke-width="1.2" fill="none" marker-end="url(#arw2)"/>
+            <rect x="622" y="24" width="152" height="52" rx="7" fill="#FF00FF" stroke="#FF00FF" stroke-width="1"/>
+            <text x="698" y="45" class="vs-th" text-anchor="middle">ROI 改善</text>
+            <text x="698" y="64" class="vs-ts" text-anchor="middle">付费意愿上升</text>
+
+            <path d="M698 80 L698 100 L84 100 L84 80" fill="none" stroke="#FF00FF" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arw2)"/>
+          </g>
+
+          <rect x="0" y="120" width="442" height="78" rx="8" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <text x="18" y="144" class="vs-th">杠杆一 · 商业模式</text>
+          <text x="18" y="166" class="vs-ts">订阅制把一次性大额投入切成可分摊的小额支出</text>
+          <text x="18" y="186" class="vs-ts" fill="#FF00FF">适配中小企业波动的订单与现金流</text>
+
+          <rect x="458" y="120" width="442" height="78" rx="8" fill="#FF00FF" stroke="#0000FF" stroke-width="1"/>
+          <text x="476" y="144" class="vs-th">杠杆二 · 上下文成本塌缩</text>
+          <text x="476" y="166" class="vs-ts">从"10 天 / 100 万"降至"3 天 / 5000 元"</text>
+          <text x="476" y="186" class="vs-ts" fill="#FF00FF">让语义前提第一次变得可负担</text>
+        </svg>
+        </div>
+        <div class="fig-f">资料来源：千问办公 · 黑湖科技 · 中数睿智公开信息</div>
+      </div>
+
+
+      <details class="fold">
+        <summary>展开：商业模式变革——比技术更深的一件事</summary>
+        <div class="fold-body">
+          <p>
+            传统工业软件一次性项目买断，正在转向 <strong>SaaS 年费订阅</strong>，并同步试点按工单、Token 调用、增量收益分成三种弹性付费。其意义不在收费方式，而在于把<strong>资本性投入转化为运营支出</strong>——直接决定中小企业能否进场。
+          </p>
+          <p>这条链若成立，就能解释"中小企业规模化率仅约 15%"这个数字的未来方向：</p>
+          <ul>
+            <li>订阅制与收益分成 → 降低前期投入门槛</li>
+            <li>中小企业渗透率上升 → 真实场景反馈增加</li>
+            <li>模型在真实场景迭代 → 效果提升、ROI 改善</li>
+            <li>付费意愿上升 → 商业模式可持续</li>
+          </ul>
+          <p class="note">
+            这是与上下文成本塌缩并列的第二大杠杆。二者若同时成立，"智能鸿沟"才有可能收敛。
+          </p>
+        </div>
+      </details>
+
+      <details class="fold">
+        <summary>展开：技术演进方向与一条待验证的预测</summary>
+        <div class="fold-body">
+          <p><b>方向一：从"会聊天"到"能干活"再到"能控制"。</b>对应 L1→L2→L3 的三级跃迁，L3 尚未规模出现。</p>
+          <p><b>方向二：世界模型与前瞻动作模型（WAM）。</b>让 AI 不仅看懂，还能推演物理世界、预见执行后果。毕马威在 2026 世界人工智能大会提出其六大工业化价值，从真实试错走向内部学习、从即时反应走向前瞻决策、从真实测试走向可控压力测试等。<span class="term-ref" data-term="世界动作模型（WAM）">该术语尚无统一定义</span>，属技术方向而非既成事实。</p>
+          <p><b>方向三：具身智能进入产线。</b>2026 年被业内视为从展台走向产线的分水岭。三道产业化卡点：必须从真实产线痛点出发匹配技术而非先打磨算法再找场景；产线 7×24 运行对稳定性容错要求极高；必须具备交付、运维、培训、迭代的完整商业闭环。</p>
+          <p><b>方向四：云边端一体与大小模型协同。</b>"云端训练—边缘推理—直达工控"成为标准部署形态。</p>
+          <p><b>方向五：AI Factory 与"先验证再建设"。</b>数字孪生前置验证产线布局、设备配置与运营节奏，再实体建设。</p>
+          <p class="note">
+            <b>一条待验证的预测：</b>有专家判断中短期内产业升级的核心挑战来自"市场侧"而非"技术侧"——企业面临利润空间承压、预算趋紧，对 AI 应用的付费意愿与投资节奏趋于谨慎。由此可推导出一个可被证伪的命题：<b>2027 年之前，工业 AI 的市场规模增长会慢于技术进展速度。</b>此项列入持续跟踪。
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 工具区 ══════════════════ -->
+  <section id="tools">
+    <div class="wrap">
+      <div class="eyebrow">工具区</div>
+      <h2 class="sec wide">二十条结论，按主题查找</h2>
+      <p class="lede">
+        如果只带走一页纸，便是下面这二十条。可按主题或涉及行业筛选。
+      </p>
+
+      <div class="filters" id="f-tag">
+        <button class="fbtn on" data-f="all">全部</button>
+        <button class="fbtn" data-f="tech">技术</button>
+        <button class="fbtn" data-f="biz">商业</button>
+        <button class="fbtn" data-f="method">方法论</button>
+      </div>
+      <div class="filters" id="f-ind">
+        <button class="fbtn on" data-f="all">全部行业</button>
+        <button class="fbtn" data-f="auto">汽车</button>
+        <button class="fbtn" data-f="fmcg">快消日化</button>
+        <button class="fbtn" data-f="general">通用</button>
+      </div>
+
+      <div class="concl" id="concl"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 附录 ══════════════════ -->
+  <section id="appendix">
+    <div class="wrap">
+      <div class="eyebrow">附录</div>
+      <h2 class="sec wide">方法论、待核台账与术语表</h2>
+
+      <h3>六条引述纪律</h3>
+      <p>研究中最难的部分不是找到数字，而是判断哪些数字不该被引用。以下六条贯穿全部内容。</p>
+      <ul>
+        <li>不引用商业咨询机构的市场规模数据，除非样本、口径、统计方法三件套齐备</li>
+        <li>不引用失败率类二手转述，改用有明确出处的麦肯锡、MIT、Gartner、IDC 数据</li>
+        <li>企业自披露效益数据统一标注"（企业自披露，未见第三方验证）"</li>
+        <li>前瞻性内容明确标注，区分已实现、技术方向与研究前沿</li>
+        <li>口径漂移标注统计时点，并说明取舍理由</li>
+        <li>待核项逐条登记，公开呈现而非隐藏</li>
+      </ul>
+
+      <h3>待核台账 <span style="font-size:.86rem;color:var(--ink-3);font-family:var(--font-sans);font-weight:400">— 共 15 项，进入对外版本前须逐项回溯一手来源</span></h3>
+      <div class="pending" id="pending"></div>
+
+      <h3>术语对照表</h3>
+      <p>正文采用行业通用表达。以下为报告内部术语与通俗说法的映射，便于随时回查。</p>
+      <div class="terms" id="terms"></div>
+
+      <h3>数据性质图例</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>标记</th><th>含义</th><th>可信度处理</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pop-tag tag-official">官方统计</span></td><td>政府或国际组织发布</td><td>可直接引用</td></tr>
+            <tr><td><span class="pop-tag tag-enterprise">企业自披露</span></td><td>企业或厂商自行发布，未经第三方验证</td><td>引用时标注来源，可信度开关中降权</td></tr>
+            <tr><td><span class="pop-tag tag-research">第三方研究</span></td><td>研究机构调研数据</td><td>注明机构与年份</td></tr>
+            <tr><td><span class="pop-tag tag-estimate">本报告测算</span></td><td>基于公开数据推算或行业专家估算</td><td>明确标注为测算，非官方结论</td></tr>
+            <tr><td><span class="pop-tag tag-pending">待核</span></td><td>尚未回溯至一手来源</td><td>公开登记在待核台账中</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 图表索引 ══════════════════ -->
+  <section id="charts">
+    <div class="wrap">
+      <div class="eyebrow">图表索引</div>
+      <h2 class="sec wide">八张图</h2>
+      <p class="lede">全部手写矢量绘制，无第三方图表库依赖，可离线查看。</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>图</th><th>内容</th><th>所属章节</th></tr></thead>
+          <tbody>
+            <tr><td>剪刀差</td><td>应用渗透与规模化落地的落差，以及制造业 AI 阶段分布</td><td>第一章</td></tr>
+            <tr><td>政策 KPI</td><td>2027 年五项量化目标与三级政策链</td><td>第一章</td></tr>
+            <tr><td>智能工厂梯度</td><td>四层结构与领航级成效</td><td>第一章</td></tr>
+            <tr><td>四行业矩阵</td><td>AI 介入深度与转型驱动（可切维度版本见第二章）</td><td>第二章</td></tr>
+            <tr><td>语义底座</td><td>工业知识六层架构</td><td>第三章</td></tr>
+            <tr><td>上下文回路</td><td>运行时供给回路与权限闸门</td><td>第三章</td></tr>
+            <tr><td>范式谱系</td><td>八类应用范式成熟度与自主度刻度</td><td>第四章</td></tr>
+            <tr><td>商业模式</td><td>订阅制正向循环与两条并行杠杆</td><td>第四章</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-h">关于本材料</div>
+        <p style="font-size:.86rem;margin:0;color:var(--ink-3);line-height:1.7">
+          制造业数字化与智能化系列研究报告的可视化呈现版。内容依据四篇正篇（约 5.4 万字）改写，叙事层约 7600 字，数据层承载完整信息。
+          全部数字标注口径、时点、来源与数据性质；十五项待核数据公开登记于附录。
+        </p>
+      </div>
+      <div>
+        <div class="foot-h">快速跳转</div>
+        <ul class="foot-list">
+          <li><a href="#core">核心矛盾与四个关键数字</a></li>
+          <li><a href="#arc">四篇论证链</a></li>
+          <li><a href="#tools">二十条结论索引</a></li>
+          <li><a href="#charts">八张图索引</a></li>
+          <li><a href="#appendix">待核台账与术语表</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-h">数据来源</div>
+        <ul class="foot-list">
+          <li>工业和信息化部 · 国新办</li>
+          <li>IDC · 麦肯锡 · MIT Sloan</li>
+          <li>世界经济论坛（WEF）</li>
+          <li>卡奥斯 · 昆仑 · 长城 · 海信 · 蔚来</li>
+          <li>完整来源清单见各章折叠区</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/**
+ * 数据字典 —— 数字钻取浮层的唯一数据源
+ *
+ * 每个条目对应页面中一个可钻取数字：
+ *   id       页面内的引用锚点（HTML 中用 data-fact="id" 绑定）
+ *   value    显示值（用于浮层标题）
+ *   label    这个数字指什么
+ *   caliber  口径：统计范围与算法
+ *   at       统计时点
+ *   source   来源名称（对应附录来源列表）
+ *   kind     数据性质：official | enterprise | research | estimate
+ *   pending  是否处于待核状态
+ *   note     补充说明
+ *
+ * kind 说明：
+ *   official   官方统计（政府 / 国际组织）
+ *   enterprise 企业自披露（未经第三方验证）
+ *   research   第三方研究机构
+ *   estimate   本报告测算或行业专家估算
+ */
+window.FACTS = {
+  /* ── 第一章 · 宏观 ───────────────────────── */
+  penetration: {
+    value: '47.5%',
+    label: '中国工业企业应用大模型及智能体的比例',
+    caliber: '应用了任意大模型或智能体的工业企业占比，含试点与单点应用，不含已规模化产生经营结果的企业',
+    at: '2025 年全年',
+    source: 'IDC 中国',
+    kind: 'research',
+    note: '同一口径下 2024 年为 9.6%，一年跃升 37.9 个百分点'
+  },
+  penetration24: {
+    value: '9.6%',
+    label: '中国工业企业应用大模型及智能体的比例（上年）',
+    caliber: '同上口径',
+    at: '2024 年全年',
+    source: 'IDC 中国',
+    kind: 'research',
+    note: '与 47.5% 同源同口径，可直接比较'
+  },
+  multiOps: {
+    value: '35%',
+    label: '在多个运营环节部署大模型及智能体的企业比例',
+    caliber: '已在两个及以上运营环节（研发 / 生产 / 供应链 / 运维 / 营销）部署的企业占比',
+    at: '2025 年全年',
+    source: 'IDC 中国',
+    kind: 'research',
+    note: '上年为 1.7%。该指标比整体应用比例更能反映落地的深度'
+  },
+  scaled: {
+    value: '≈15%',
+    label: '制造业中 AI 真正实现规模化落地的企业比例',
+    caliber: '已跨越试点阶段、在核心业务流程产生可归因经营结果的制造企业占比',
+    at: '2025 年',
+    source: '麦肯锡《2025 全球 AI 现状调研》',
+    kind: 'research',
+    note: '同期制造业 47% 停留在试验阶段、31% 处于单点试点。这三个数字构成完整分布'
+  },
+  pilotReturn: {
+    value: '≈95%',
+    label: '企业级生成式 AI 试点中未量化出可测算回报的比例',
+    caliber: '按 ROI 可量化口径统计的试点项目，非按技术效果统计',
+    at: '2024—2025 年',
+    source: 'MIT Sloan',
+    kind: 'research',
+    note: '报告同时给出漏斗：在看 60% → 在试 20% → 真上线 5%'
+  },
+  tools: {
+    value: '84.0%',
+    label: '工业企业数字化研发设计工具普及率',
+    caliber: '规模以上工业企业中采用数字化研发设计工具的企业占比，属广度指标，不反映使用深度',
+    at: '2025 年 6 月底',
+    source: '工业和信息化部',
+    kind: 'official'
+  },
+  cnc: {
+    value: '66.8%',
+    label: '工业企业关键工序数控化率',
+    caliber: '规模以上工业企业关键工序实现数控化的比例，属广度指标',
+    at: '2025 年 6 月底',
+    source: '工业和信息化部',
+    kind: 'official'
+  },
+  robotDensity: {
+    value: '470',
+    label: '中国工业机器人密度（台/万人）',
+    caliber: '每万名产业工人拥有的工业机器人数量，已连续 11 年为全球最大消费国',
+    at: '2025 年',
+    source: '工业和信息化部',
+    kind: 'official'
+  },
+  lighthouseCN: {
+    value: '103',
+    label: '中国大陆入选 WEF 全球灯塔网络的工厂数量',
+    caliber: '经世界经济论坛评选的全球先进制造与供应链运营基地。评选需企业主动申报并接受审计，参与基数非中性',
+    at: '2026 年 6 月',
+    source: '世界经济论坛 / 工业富联公开披露',
+    kind: 'enterprise',
+    pending: true,
+    note: '需与 WEF 官方国别统计复核；该数字不宜直接等同于"整体领先"'
+  },
+  industrialSW: {
+    value: '3330亿元',
+    label: '中国工业软件产品收入',
+    caliber: '工信部软件业统计口径下工业软件产品收入，占全行业软件业务收入约 2.2%',
+    at: '2025 年全年',
+    source: '工业和信息化部《2025 年软件业运行情况》',
+    kind: 'official',
+    note: '同比增长 9.7%，低于软件业整体 13.2%'
+  },
+  industrialSWRatio: {
+    value: '2.2%',
+    label: '工业软件占软件业收入比重',
+    caliber: '由工信部口径数据推算：3330 亿 ÷ 15.48 万亿',
+    at: '2025 年',
+    source: '本报告测算（基于工信部数据）',
+    kind: 'estimate',
+    note: '推算值，非官方结论。提示工业软件仍处攻坚期'
+  },
+  kpiAgents: {
+    value: '1000',
+    label: '到 2027 年推出高水平工业智能体的目标',
+    caliber: '政策目标口径，"高水平"的具体定义尚待分类分级标准落地',
+    at: '目标年 2027 年',
+    source: '工信部等八部门《"人工智能+制造"专项行动实施意见》',
+    kind: 'official'
+  },
+  kpiDatasets: {
+    value: '100',
+    label: '到 2027 年打造工业领域高质量数据集的目标',
+    caliber: '政策目标口径',
+    at: '目标年 2027 年',
+    source: '工信部等八部门',
+    kind: 'official'
+  },
+  kpiScenarios: {
+    value: '500',
+    label: '到 2027 年推广典型应用场景的目标',
+    caliber: '政策目标口径',
+    at: '目标年 2027 年',
+    source: '工信部等八部门',
+    kind: 'official'
+  },
+  smbGap: {
+    value: '1—2年',
+    label: '中小企业对数智化转型回报周期的普遍预期',
+    caliber: '企业主自述的预期回收周期，非实测值',
+    at: '2026 年 8 月',
+    source: '工业和信息化部国新办发布会',
+    kind: 'official',
+    note: '官方表述：中小企业普遍面临"缺资金、缺人才、缺数据"困境，回报率难以量化'
+  },
+
+  /* ── 第二章 · 四行业 ─────────────────────── */
+  petroChem: {
+    value: '700余万元',
+    label: '单套装置的昆仑大模型常减压工艺运行优化年经济效益',
+    caliber: '单套常减压装置的年度经济效益测算值',
+    at: '2025—2026 年',
+    source: '中国石油昆仑大模型公开披露',
+    kind: 'enterprise',
+    note: '同批披露的关键指标预测精度超过 95%。未经第三方审计'
+  },
+  petroChemZero: {
+    value: '零人工干预',
+    label: '炼化生产系统中工业级智能体的运行状态',
+    caliber: '指智能体在常减压装置产线实现长期连续稳定运行，且不依赖人工介入',
+    at: '2026 年',
+    source: '昆仑数智 × 阿里云公开披露',
+    kind: 'enterprise',
+    note: '国内首个进入炼化生产系统并实现零人工干预的工业级智能体'
+  },
+  wells: {
+    value: '3.5→11.5口',
+    label: '抽油机井工况智能诊断应用后的人均管井数变化',
+    caliber: '大庆、新疆、辽河等油田 8000 余口井的人均管理井数',
+    at: '2025—2026 年',
+    source: '中国石油公开披露',
+    kind: 'enterprise'
+  },
+  hisense: {
+    value: '99.7%',
+    label: 'AI 质检平台在海信视像青岛显示工厂的检测精度',
+    caliber: '基于 26 万份高质量样本训练的深度学习模型，"拍检同步"实时检测',
+    at: '2026 年',
+    source: '海信视像公开披露',
+    kind: 'enterprise',
+    note: '检测效率提升 70.7%。产线节拍 20 秒，传统人工检测需约 30 秒——AI 质检在此已是必要条件而非优化项'
+  },
+  hisenseCycle: {
+    value: '3—4分钟',
+    label: '海信电视产线完成换款所需时间',
+    caliber: '200 多种型号混线生产的换型耗时',
+    at: '2026 年',
+    source: '海信视像公开披露',
+    kind: 'enterprise'
+  },
+  hisenseBenefit: {
+    value: '+21%',
+    label: '海信全链 AI 智造升级后的产线生产效率提升',
+    caliber: '全链 AI 智造改造综合效果，配套运营成本降 10.1%、碳排放减 12%',
+    at: '2026 年',
+    source: '海信视像公开披露',
+    kind: 'enterprise'
+  },
+  nio: {
+    value: '+44%',
+    label: '蔚来合肥工厂的上市速度提升',
+    caliber: '车端 AI、换电网络与数字孪生实时闭环系统上线后的产品上市周期改善',
+    at: '2026 年',
+    source: '蔚来 / 世界经济论坛公开披露',
+    kind: 'enterprise',
+    note: '同一工厂管理 360 万+ 种车辆配置，研发流程自动化 90%'
+  },
+  unilever: {
+    value: '-75%',
+    label: '联合利华合肥配送中心的交期缩短',
+    caliber: '工厂直达消费者模式上线后的端到端交期改善',
+    at: '2026 年',
+    source: '联合利华 / 世界经济论坛公开披露',
+    kind: 'enterprise',
+    note: '同期预测准确率提升 39%，运营成本下降 24%；31 项数字化用例中 65% 由 AI 驱动'
+  },
+  catl: {
+    value: '-56%',
+    label: '宁德时代宜宾基地的碳足迹降幅',
+    caliber: 'AI 驱动能源改造、微网光伏储能与低碳工艺综合效果',
+    at: '2026 年',
+    source: '宁德时代 / 世界经济论坛公开披露',
+    kind: 'enterprise',
+    note: '带动 13 家供应商获碳中和认证；Scope 1&2 排放降 16%，单位产出 Scope 3 降 45%'
+  },
+  midea: {
+    value: '-39%',
+    label: '美的厨热芜湖的端到端交付周期缩短',
+    caliber: '113 项数字化用例（35% 由 AI 驱动）上线后的交付周期改善',
+    at: '2026 年',
+    source: '美的 / 世界经济论坛公开披露',
+    kind: 'enterprise',
+    note: '同期库存天数下降 30%，市场缺陷率下降 86%'
+  },
+  ppg: {
+    value: '1周',
+    label: '宝洁 AI 自动化研发平台的配方验证周期',
+    caliber: '原本需数月的配方验证周期压缩至一周',
+    at: '2025 年',
+    source: '宝洁公开披露',
+    kind: 'enterprise'
+  },
+  smeg: {
+    value: '20万瓶',
+    label: '上美股份智慧工厂的日产能',
+    caliber: '占地 2 万㎡ 智慧工厂的日化产品产线日产能',
+    at: '2025 年起投产',
+    source: '上美股份公开披露',
+    kind: 'enterprise',
+    note: '30 台 AGV 配合产线 AI 叫料系统；AI 视觉检测每秒完成 20 次瑕疵筛查'
+  },
+
+  /* ── 第三章 · 语义底座 ───────────────────── */
+  contextScale: {
+    value: '150PB',
+    label: '中大型企业的内部数据规模均值',
+    caliber: '文档、会议、群聊、邮件、多模态数据的总量估算',
+    at: '2026 年 9 月',
+    source: '千问办公公开披露',
+    kind: 'enterprise'
+  },
+  contextWindow: {
+    value: '100万token',
+    label: '当前最好的上下文窗口容量',
+    caliber: '单次推理可容纳的最大上下文 token 数',
+    at: '2026 年 9 月',
+    source: '千问办公公开披露',
+    kind: 'enterprise',
+    note: '与 150PB 相差约 8 个数量级——企业缺的不是数据，是取用数据的能力'
+  },
+  contextCostOld: {
+    value: '10天 / 100万元',
+    label: '过去建设一套智能体可用上下文的周期与成本',
+    caliber: '厂商披露的建设工时与费用估算',
+    at: '2026 年 9 月前',
+    source: '千问办公公开披露',
+    kind: 'enterprise',
+    pending: true,
+    note: '待核：是否含数据治理前置成本、是否适用于工业复杂场景，均未验证'
+  },
+  contextCostNew: {
+    value: '3天 / 5000元',
+    label: '当前建设一套智能体可用上下文的周期与成本',
+    caliber: '同上',
+    at: '2026 年 9 月',
+    source: '千问办公公开披露',
+    kind: 'enterprise',
+    pending: true,
+    note: '待核：办公场景口径，能否外推到工业现场是最大未验证项。此数字直接决定中小企业准入门槛'
+  },
+  refineryAge: {
+    value: '15年',
+    label: '国内炼化装置的平均服役年限',
+    caliber: '工信部调研统计的存量装置平均服役年限',
+    at: '2026 年',
+    source: '工业和信息化部调研',
+    kind: 'official',
+    note: '相当比例存量设备未预置数据采集接口，构成流程工业数据化的第一道障碍'
+  },
+
+  /* ── 第四章 · 大模型与智能体 ─────────────── */
+  industrialAI2028: {
+    value: '900亿元',
+    label: '中国工业 AI 支出的预测值',
+    caliber: 'IDC 对中国工业 AI 市场支出的预测',
+    at: '预测至 2028 年',
+    source: 'IDC',
+    kind: 'research',
+    note: '约合 125.3 亿美元。属预测值，非实际发生额'
+  },
+  kunlun: {
+    value: '3000亿',
+    label: '昆仑大模型的参数规模',
+    caliber: '模型参数规模；已实现 152 个应用场景规模化落地',
+    at: '2026 年',
+    source: '中国石油公开披露',
+    kind: 'enterprise',
+    note: '入选 2026 WAIC SAIL 奖 TOP30；行业首发六大 AI 高阶能力'
+  },
+  greatWall: {
+    value: '7000亿 + 700亿',
+    label: '长城大模型的参数规模组合',
+    caliber: '两个参数规模并存；已赋能信息系统超 200 个',
+    at: '2026 年',
+    source: '中国石化公开披露',
+    kind: 'enterprise'
+  },
+  selfRun: {
+    value: '>95%',
+    label: '数智建材工业大模型生产智能体的模型自主运行率',
+    caliber: '核心工序实时闭环控制场景下，模型无需人工干预即可运行的时长占比',
+    at: '2026 年',
+    source: '数智建材研究院公开披露',
+    kind: 'enterprise',
+    note: '已在百余家工厂规模化交付；单工厂年效益数百万元'
+  },
+  blackLake: {
+    value: '约1分钟',
+    label: '黑湖科技工程智能体完成图纸工艺解析的耗时',
+    caliber: '从输入图纸到输出工艺解析结果的端到端耗时',
+    at: '2026 年',
+    source: '黑湖科技公开披露',
+    kind: 'enterprise',
+    note: '解析准确率约 95%'
+  },
+  lenovo: {
+    value: '8秒',
+    label: '联想武汉基地鲁班生产智能体完成万人排班的耗时',
+    caliber: '1 万名员工的优化排班计算耗时',
+    at: '2026 年',
+    source: '联想公开披露',
+    kind: 'enterprise'
+  },
+  otSecurity: {
+    value: '100+',
+    label: '因网络攻击导致公共系统与 OT 系统瘫痪的事件数量',
+    caliber: '已发生并被记录的案例总数',
+    at: '截至 2026 年',
+    source: 'SGS 中国',
+    kind: 'enterprise',
+    note: '安全底座不牢，智能化越快风险越大'
+  }
+};
+
+/** 结论索引 —— 20 条，可筛选 */
+window.CONCLUSIONS = [
+  { id: 1, tag: 'tech', ind: 'general', text: '中国的数字化已过"有没有"阶段，进入"深不深"阶段；84.0% 与 66.8% 是广度指标，深度指标（经营结果归因）缺失', src: '报告01' },
+  { id: 2, tag: 'tech', ind: 'general', text: '核心矛盾是"点状繁荣与规模化鸿沟"：应用渗透 47.5%，规模化落地仅约 15%', src: '报告01' },
+  { id: 3, tag: 'tech', ind: 'general', text: '政策已从"示范推广"切换到"量化承诺"，2027 年成为产业能力的可验收节点', src: '报告01' },
+  { id: 4, tag: 'tech', ind: 'general', text: '灯塔工厂评选重构为五类，说明"综合最优"已失去区分度；中国 103 座约占全球 43%，但不宜直接等同于整体领先', src: '报告01' },
+  { id: 5, tag: 'biz', ind: 'general', text: '中小企业瓶颈是商业问题（有限现金流 × 不确定回报），不是技术问题', src: '报告01' },
+  { id: 6, tag: 'method', ind: 'general', text: '最大的方法论缺口是度量层缺位——业界度量几乎全是过程指标，而非结果指标', src: '报告01' },
+  { id: 7, tag: 'tech', ind: 'general', text: '四行业 AI 深度差异由生产形态与容错成本解释，而非技术能力', src: '报告02' },
+  { id: 8, tag: 'tech', ind: 'general', text: '消费电子与石化构成两极：前者 AI 已进核心工序，后者已进控制回路', src: '报告02' },
+  { id: 9, tag: 'biz', ind: 'auto', text: '汽车行业独有的"数据主权"难题，是"可用不可见"技术路线的根本来源', src: '报告02/03' },
+  { id: 10, tag: 'biz', ind: 'fmcg', text: '快消 AI 存在重研发派／智造派／效能派三分化，三至五年内会部分收敛且收敛点在研发', src: '报告02' },
+  { id: 11, tag: 'tech', ind: 'general', text: '本体不是新概念，真正要证成的是"大模型是否让它从人工负担变成可自动构建的资产"', src: '报告03' },
+  { id: 12, tag: 'tech', ind: 'general', text: '企业上下文 ≠ 企业知识库；目标是让 AI 对每次任务拿到足够、当前、可追溯、不越权的事实', src: '报告03' },
+  { id: 13, tag: 'biz', ind: 'general', text: '上下文成本从"10 天／100 万"降至"3 天／5000 元"，是中小企业准入的决定变量', src: '报告03' },
+  { id: 14, tag: 'method', ind: 'general', text: '权限必须检索前生效，"召回后遮字"不构成合规', src: '报告03' },
+  { id: 15, tag: 'method', ind: 'general', text: '完整优先级顺序是：语义层 → 度量层 → 模型层 → 应用层，语义层在先', src: '报告03' },
+  { id: 16, tag: 'tech', ind: 'general', text: '产业正处在 L1 信息辅助向 L2 受控执行的过渡期，"落地元年"更多指形态出现而非效果普及', src: '报告04' },
+  { id: 17, tag: 'tech', ind: 'general', text: '八类应用范式的成熟度由结果可自动验证性决定，而非技术难度', src: '报告04' },
+  { id: 18, tag: 'biz', ind: 'general', text: '订阅制把资本性支出转为运营支出，是与本体成本塌缩并列的第二大杠杆', src: '报告04' },
+  { id: 19, tag: 'tech', ind: 'general', text: '技术瓶颈在上下文供给与算力效率，不在模型本身', src: '报告04' },
+  { id: 20, tag: 'method', ind: 'general', text: '最被低估的风险是 OT 安全——已有超 100 起网络攻击导致 OT 系统瘫痪', src: '报告04' }
+];
+
+/** 术语对照表 —— 报告内部术语 → 行业通用表达 */
+window.GLOSSARY = [
+  { term: '梯度培育（基础/先进/卓越/领航级）', plain: '智能工厂四级评价体系', note: '从达标到行业最高等级的四个层级' },
+  { term: '领航级智能工厂', plain: '最高等级示范工厂', note: '代表全球领先水平的 15 家' },
+  { term: '模数共振行动', plain: '打通数据与模型的双向机制', note: '数据协同—模型训练—应用开发—安全保障' },
+  { term: '语义锚点', plain: '行业知识底座', note: '让模型知道业务对象指什么的统一语义层' },
+  { term: '安全栅栏', plain: '规则约束', note: '用领域规则把模型幻觉限制在可解释范围内' },
+  { term: '度量层', plain: '价值证明机制', note: '把 AI 效果翻译成经营结果的度量体系' },
+  { term: '零人工干预', plain: 'AI 直接接管关键工艺参数', note: '流程工业中已验证的最高自主度形态' },
+  { term: '闭环控制', plain: 'AI 参与生产控制回路', note: '模型输出直接作用于设备参数' },
+  { term: 'L1/L2/L3 自主度', plain: '三级自主程度', note: '信息辅助 → 受控执行 → 自主优化' },
+  { term: '企业上下文', plain: '任务级信息供给', note: '每次任务时给 AI 的"对的那一小撮"信息' },
+  { term: '世界动作模型（WAM）', plain: '兼顾预测与执行的技术方向', note: '前沿探索阶段，尚未规模验证' },
+  { term: '数据主权 / 可用不可见', plain: '数据不外流仍可协作', note: '通过隐私计算等技术在不交出数据的前提下协同' },
+  { term: 'SME / 中小企业', plain: '中小企业', note: '本报告特指制造业中小规模经营主体' }
+];
+
+/** 待核台账 —— 逐条登记，附录展示 */
+window.PENDING = [
+  { item: '中国灯塔工厂数量 103 座', where: '第一章 · 全球位置', need: '与 WEF 官方国别统计复核，确认评选参与度差异的影响' },
+  { item: '企业上下文成本 3 天／5000 元', where: '第三章 · 成本塌缩', need: '验证是否含数据治理前置成本；确认能否外推至工业复杂场景' },
+  { item: '企业上下文成本 10 天／100 万元', where: '第三章 · 成本塌缩', need: '同上，验证基线口径' },
+  { item: '工业软件国产化率（研发设计类长期低于 15%）', where: '第一章 · 工业软件', need: '回到一手来源核验具体数值与统计年份' },
+  { item: '工业大模型项目失败率 74%／制造业近 80%', where: '第一章 · 落差面', need: '回到 MIT／麦肯锡／RAND 原文；本报告已改用"约 15% 规模化"表述' },
+  { item: '中小企业数字化转型失败率 72%／制造业 74.2%', where: '第一章 · 落差面', need: '同上，二手转述不得直接引用' },
+  { item: '2019—2024 全球制造业 AI 投入 1270 亿美元、成功率 17%→13%', where: '第一章 · 落差面', need: '回溯原始报告，确认口径与统计范围' },
+  { item: '欧盟智能制造数据空间法案（2025 年通过）', where: '第一章 · 国际路线', need: '核实法案名称、编号与生效状态' },
+  { item: '预测性维护可减少 35—45% 停机、10—25% 维保成本', where: '第四章 · 预测维护范式', need: '来源为供应商白皮书，需独立核验' },
+  { item: '石化行业五年数字化可释放十万亿级价值', where: '第四章 · 行业挑战', need: '为行业专家测算而非统计结果，引用须标注为估算' },
+  { item: '模型自主运行率超 95%（数智建材）', where: '第四章 · 闭环控制范式', need: '核实定义口径与统计方式' },
+  { item: '模型泛化能力限制（百度智能云表述）', where: '第四章 · 关键问题', need: '补充可量化的评估方法' },
+  { item: '算力"稀缺但利用效率偏低"的判断', where: '第四章 · 关键问题', need: '补充量化证据' },
+  { item: '复合型人才缺口规模', where: '第四章 · 潜在影响', need: '需招聘数据或调研数据支撑' },
+  { item: '本报告对"2027 年前工业 AI 市场增速慢于技术进展"的预测', where: '第四章 · 独立验证判断', need: '属可被证伪的预测，需持续跟踪' }
+];
+
+</script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   交互层 —— 数字钻取、可信度开关、矩阵切维、论证链、范式自评、结论筛选
+   ═══════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var KIND_LABEL = {
+    official:   { cls: 'tag-official',   text: '官方统计' },
+    enterprise: { cls: 'tag-enterprise', text: '企业自披露' },
+    research:   { cls: 'tag-research',   text: '第三方研究' },
+    estimate:   { cls: 'tag-estimate',   text: '本报告测算' }
+  };
+
+  /* ── 1. 数字钻取浮层 ─────────────────────────────── */
+  var pop = null, popFor = null, popScrollGuard = 0;
+
+  function ensurePop() {
+    if (pop) return pop;
+    pop = document.createElement('div');
+    pop.className = 'pop';
+    pop.setAttribute('role', 'dialog');
+    pop.setAttribute('aria-live', 'polite');
+    document.body.appendChild(pop);
+    return pop;
+  }
+
+  function showPop(btn) {
+    var id = btn.getAttribute('data-fact');
+    var f = window.FACTS[id];
+    if (!f) return;
+
+    var p = ensurePop();
+    var k = KIND_LABEL[f.kind] || KIND_LABEL.estimate;
+    var html = '';
+    html += '<button class="pop-close" aria-label="关闭">&times;</button>';
+    html += '<div class="pop-v">' + esc(f.value) + '</div>';
+    html += '<div class="pop-l">' + esc(f.label) + '</div>';
+    html += '<div class="pop-row"><span class="pop-k">口径</span><span class="pop-v2">' + esc(f.caliber) + '</span></div>';
+    html += '<div class="pop-row"><span class="pop-k">时点</span><span class="pop-v2">' + esc(f.at) + '</span></div>';
+    html += '<div class="pop-row"><span class="pop-k">来源</span><span class="pop-v2">' + esc(f.source) + '</span></div>';
+    html += '<div class="pop-row"><span class="pop-k">性质</span><span class="pop-v2">';
+    html += '<span class="pop-tag ' + k.cls + '">' + k.text + '</span>';
+    if (f.pending) html += '<span class="pop-tag tag-pending">待核</span>';
+    html += '</span></div>';
+    if (f.note) html += '<div class="pop-note">' + esc(f.note) + '</div>';
+
+    p.innerHTML = html;
+    p.classList.add('on');
+    popFor = btn;
+
+    // 定位：优先置于按钮下方，空间不足则上移
+    var r = btn.getBoundingClientRect();
+    var w = p.offsetWidth, h = p.offsetHeight;
+    var left = r.left + window.scrollX - (w - r.width) / 2;
+    left = Math.max(16, Math.min(left, document.documentElement.scrollWidth - w - 16));
+    var top = r.bottom + window.scrollY + 8;
+    if (r.bottom + h + 24 > window.innerHeight) top = r.top + window.scrollY - h - 8;
+    p.style.left = left + 'px';
+    p.style.top = top + 'px';
+
+    // 抑制随后 400ms 内的滚动关闭（平滑滚动会滞后触发 scroll 事件）
+    popScrollGuard = Date.now() + 400;
+
+    p.querySelector('.pop-close').addEventListener('click', hidePop);
+    btn.setAttribute('aria-expanded', 'true');
+  }
+
+  function hidePop() {
+    if (!pop) return;
+    pop.classList.remove('on');
+    if (popFor) popFor.setAttribute('aria-expanded', 'false');
+    popFor = null;
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.fact');
+    if (btn) {
+      e.preventDefault();
+      if (popFor === btn) { hidePop(); return; }
+      hidePop();
+      showPop(btn);
+      return;
+    }
+    if (pop && !e.target.closest('.pop')) hidePop();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') hidePop();
+  });
+
+  /* 页面滚动期间浮层的跟随与关闭
+     - 滚动中：浮层跟随锚点重新定位（因为 html 使用了 scroll-behavior:smooth，位置会滞后变化）
+     - 滚动停止后：若用户主动滚动页面，则关闭浮层，避免它悬停在旧位置 */
+  var popRaf = null, scrollTimer = null, lastScrollY = window.scrollY;
+
+  function syncPop() {
+    if (pop && popFor && pop.classList.contains('on')) {
+      var r = popFor.getBoundingClientRect();
+      var h = pop.offsetHeight;
+      var top = r.bottom + window.scrollY + 8;
+      if (r.bottom + h + 24 > window.innerHeight) top = r.top + window.scrollY - h - 8;
+      pop.style.top = top + 'px';
+    }
+    popRaf = null;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!pop || !popFor) return;
+    if (!popRaf) popRaf = requestAnimationFrame(syncPop);
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () {
+      if (!pop || !popFor) return;
+      var y = window.scrollY;
+      // 滚动已停：先校正位置，再决定是否关闭
+      if (Math.abs(y - lastScrollY) < 2) {
+        syncPop();
+        if (Date.now() > popScrollGuard) hidePop();
+      }
+      lastScrollY = y;
+    }, 180);
+  }, { passive: true });
+
+  /* ── 2. 数据可信度分层开关 ───────────────────────── */
+  var trustSel = document.getElementById('trust-sel');
+  if (trustSel) {
+    trustSel.addEventListener('change', function () {
+      document.body.setAttribute('data-trust', trustSel.value);
+      try { localStorage.setItem('wb-trust', trustSel.value); } catch (err) {}
+    });
+    var saved = null;
+    try { saved = localStorage.getItem('wb-trust'); } catch (err) {}
+    if (saved) { trustSel.value = saved; document.body.setAttribute('data-trust', saved); }
+    else document.body.setAttribute('data-trust', 'all');
+  }
+
+  /* ── 3. 论证链 ─────────────────────────────────── */
+  var CHAIN = [
+    { t: '宏观趋势与进展', out: '<b>产出：</b>渗透率与规模化率的剪刀差（47.5% ↔ 15%）；二〇二七年可验收的政策 KPI 刻度。', go: '#ch1' },
+    { t: '四大细分产业剖析', out: '<b>产出：</b>容错成本决定 AI 介入深度（2—3 倍量级差异）；汽车独有的数据主权难题。', go: '#ch2' },
+    { t: '语义底座与上下文供给', out: '<b>产出：</b>本体是「跨系统协同」的语义前提；上下文成本塌缩是中小企业准入的关键杠杆。', go: '#ch3' },
+    { t: '大模型与工业智能体', out: '<b>产出：</b>八类范式成熟度由结果可自动验证性决定；订阅制是并列的第二大杠杆。', go: '#ch4' }
+  ];
+  var chainOut = document.getElementById('chain-out');
+  var chainBtns = document.querySelectorAll('.chain-step');
+  for (var i = 0; i < chainBtns.length; i++) {
+    (function (idx) {
+      chainBtns[idx].addEventListener('click', function () {
+        var c = CHAIN[idx];
+        chainOut.innerHTML = c.out +
+          '　<a href="' + c.go + '" style="font-weight:700;margin-left:8px">进入第 ' +
+          (idx + 1) + ' 章 →</a>';
+        chainOut.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    })(i);
+  }
+
+  /* ── 4. 四行业矩阵 · 维度切换 ───────────────────── */
+  var DIMS = {
+    depth: {
+      label: 'AI 介入深度',
+      order: ['石油化工', '消费电子', '汽车产业链', '快消日化'],
+      top: '石油化工',
+      cards: [
+        { n: '石油化工', v: '闭环控制，零人工干预', d: 'AI 已进入生产控制回路，单套装置年效益 700 余万元', foot: '严苛容错反而逼出更高自主度' },
+        { n: '消费电子', v: '核心工序，质检已标配', d: 'AI 质检精度 99.7%，检测效率提升 70.7%', foot: '精度与柔性双约束下的必然选择' },
+        { n: '汽车产业链', v: '跨组织协同，受制数据主权', d: '研发流程自动化 90%，但整零数据难以汇聚', foot: '单点突破易，跨企业协同难' },
+        { n: '快消日化', v: '需求与渠道端，尚未入执行层', d: '预测准确率 +39%、交期 -75%，生产端仍浅', foot: '价值集中在需求感知而非制造' }
+      ]
+    },
+    driver: {
+      label: '转型驱动',
+      order: ['汽车产业链', '快消日化', '消费电子', '石油化工'],
+      top: '汽车产业链',
+      cards: [
+        { n: '汽车产业链', v: '整车厂自上而下牵引', d: '头部整车企业对零部件的数字化要求从"基础达标"转向"深度协同"', foot: '有资金、有标准、有强制力' },
+        { n: '快消日化', v: '消费端需求倒逼', d: 'AI 从营销、分销、需求感知切入，向制造端回流', foot: '渠道为王，需求定义制造' },
+        { n: '消费电子', v: '客户交期与精度要求', d: 'AI 质检成为产线存亡条件：节拍 20 秒 vs 人工检测 30 秒', foot: '外部客户标准直接倒逼' },
+        { n: '石油化工', v: '安全、降本、稳产', d: '一次非计划停机损失可达千万级，AI 预判价值直接可算', foot: '容错成本决定投入意愿' }
+      ]
+    },
+    bottleneck: {
+      label: '主要瓶颈',
+      order: ['快消日化', '消费电子', '石油化工', '汽车产业链'],
+      top: null,
+      cards: [
+        { n: '快消日化', v: 'ROI 归因难、噱头难辨', d: '多数 AI 应用仍是单点试水，未串成完整商业化链路', foot: '价值真实但难以证明' },
+        { n: '消费电子', v: '中小代工厂成本承受力', d: '检测精度要求高，但大量中小代工厂数据基础薄弱', foot: '头部领先、末端滞后' },
+        { n: '石油化工', v: '存量装置数据基础、安全合规', d: '装置平均服役 15 年，相当比例未预置数据采集接口', foot: '历史包袱最重' },
+        { n: '汽车产业链', v: '数据主权与协同成本', d: '整零之间"不愿交也不能交"，数据空间尚无成熟标准', foot: '结构性难题，无技术捷径' }
+      ]
+    },
+    bench: {
+      label: '标杆企业',
+      order: ['消费电子', '快消日化', '汽车产业链', '石油化工'],
+      top: '消费电子',
+      cards: [
+        { n: '消费电子', v: '海信、工业富联、立讯、宁德时代', d: '四家标杆同时覆盖制造、AI 能力输出与电池', foot: '标杆密度最高' },
+        { n: '快消日化', v: '宝洁、欧莱雅、联合利华、上美', d: '国际重研发、国货重智造，路径三分化', foot: '两套逻辑并行' },
+        { n: '汽车产业链', v: '蔚来、比亚迪、长安、吉利', d: '覆盖整车与工艺软件两端', foot: '整零两端各有代表' },
+        { n: '石油化工', v: '镇海炼化、中科炼化、广西石化', d: '领航级智能工厂中唯一有炼化企业入选', foot: '数量最少但深度最高' }
+      ]
+    },
+    value: {
+      label: '量化收益',
+      order: ['消费电子', '石油化工', '汽车产业链', '快消日化'],
+      top: '消费电子',
+      cards: [
+        { n: '消费电子', v: '效率 +21%，不良率 -47%', d: '领航级工厂平均：生产效率提升 29%，产品不良率降低 47%', foot: '收益已落到经营指标' },
+        { n: '石油化工', v: '单装置年效益 700 余万元', d: '关键指标预测精度超过 95%，人均管井数 3.5→11.5 口', foot: '可直接折算为金额' },
+        { n: '汽车产业链', v: '上市速度 +44%，研发自动化 90%', d: '管理 360 万余种车辆配置', foot: '研发端收益显著' },
+        { n: '快消日化', v: '交期 -75%，预测 +39%', d: '配方验证周期从数月压缩至一周', foot: '营销端易量化，研发端难' }
+      ]
+    }
+  };
+
+  var matrixGrid = document.getElementById('matrix-grid');
+  var dimBtns = document.querySelectorAll('.dim-btn');
+
+  function renderMatrix(dim) {
+    var d = DIMS[dim];
+    var ordered = d.order.map(function (name) {
+      for (var i = 0; i < d.cards.length; i++) if (d.cards[i].n === name) return d.cards[i];
+      return d.cards[i];
+    });
+    matrixGrid.innerHTML = ordered.map(function (c) {
+      var isTop = d.top && c.n === d.top;
+      return '<div class="mcard' + (isTop ? ' top' : '') + '">' +
+        (isTop ? '<span class="mcard-badge">本维度领先</span>' : '') +
+        '<div class="mcard-n">' + esc(d.label) + '</div>' +
+        '<div class="mcard-t">' + esc(c.n) + '</div>' +
+        '<div class="mcard-v">' + esc(c.v) + '</div>' +
+        '<div class="mcard-d">' + esc(c.d) + '</div>' +
+        '<div class="mcard-foot">' + esc(c.foot) + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  for (var d = 0; d < dimBtns.length; d++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        for (var j = 0; j < dimBtns.length; j++) dimBtns[j].classList.remove('on');
+        btn.classList.add('on');
+        renderMatrix(btn.getAttribute('data-dim'));
+      });
+    })(dimBtns[d]);
+  }
+  renderMatrix('depth');
+
+  /* ── 5. 范式成熟度自评器 ─────────────────────────── */
+  /* 每类范式给出该范式特有的具体判断场景，避免八道题读起来重复 */
+  var PARADIGMS = [
+    {
+      name: '视觉感知型',
+      q: '检测结果由谁判定？',
+      opts: ['机器按阈值自动判定', '需人工复检才作数', '看产线产量推算'],
+      correct: 0,
+      why: '输入结构化、输出机器可判定——这是唯一一个"输入即结构化、输出可自动判定"的范式，因此效果可被机器持续验证。'
+    },
+    {
+      name: '知识工程型',
+      q: '生成的工艺方案如何被采纳？',
+      opts: ['专家看一眼就能用', '需专家逐条审校', '专家也无法判断'],
+      correct: 0,
+      why: '工艺方案能否被工艺工程师快速采纳，有明确信号；且知识可由专家直接审校，风险可控。'
+    },
+    {
+      name: '预测维护型',
+      q: '预测准确后，收益如何体现？',
+      opts: ['停机时间自动记录', '事后人工统计', '无法量化'],
+      correct: 0,
+      why: '停机会被自动记录、维修成本有既有账可查——收益可由业务指标直接验证。'
+    },
+    {
+      name: '优化决策型',
+      q: '排产质量的瓶颈在哪？',
+      opts: ['跨系统数据是否同步', '算法是否够先进', '设备是否够新'],
+      correct: 0,
+      why: '排产质量取决于订单、设备、库存、工艺数据是否结构化且同步——依赖跨系统数据质量，是"高但有条件"的一档。'
+    },
+    {
+      name: '需求感知型',
+      q: '消费端数据如何进入制造端？',
+      opts: ['需跨组织汇聚打通', '内部即可闭环', '无法回流'],
+      correct: 0,
+      why: '需要跨组织数据汇聚（消费端回流到制造端），数据能否汇聚决定了成熟度上限。'
+    },
+    {
+      name: '闭环控制型',
+      q: 'AI 直接调工艺参数，错一次的代价？',
+      opts: ['不可逆，可能导致事故', '可返工重做', '仅影响良率'],
+      correct: 0,
+      why: '物理后果不可逆，必须做到极高置信度才能交出控制权——判据最严格，因此只在流程工业头部验证。'
+    },
+    {
+      name: '具身执行型',
+      q: '一次成功演示等于什么？',
+      opts: ['需数千小时连续运行才算数', '演示成功即达标', '看单次任务完成率'],
+      correct: 0,
+      why: '展台可以演示一次成功动作，工厂需要数千小时稳定运行——验证周期最长，因此成熟度最低。'
+    },
+    {
+      name: '上下文供给型',
+      q: '它自身产生什么业务价值？',
+      opts: ['不直接产生，但决定其他范式上限', '直接产生可量化收益', '完全无价值'],
+      correct: 0,
+      why: '它不直接产生业务价值，但决定其余七类的实际上限——属使能型范式，判据同样是结果能否被验证。'
+    }
+  ];
+
+  var quizList = document.getElementById('quiz-list');
+  var quizOut = document.getElementById('quiz-out');
+  var quizFill = document.getElementById('quiz-fill');
+  var quizCount = document.getElementById('quiz-count');
+  var picks = new Array(PARADIGMS.length).fill(-1);
+
+  function renderQuiz() {
+    quizList.innerHTML = PARADIGMS.map(function (p, pi) {
+      return '<div class="qrow' + (picks[pi] >= 0 ? ' done' : '') + '" data-pi="' + pi + '">' +
+        '<div class="qhead">' +
+          '<div class="qname">' + esc(p.name) + '</div>' +
+          '<div class="qquestion">' + esc(p.q) + '</div>' +
+        '</div>' +
+        '<div class="qopts">' +
+        p.opts.map(function (o, oi) {
+          var cls = '';
+          if (picks[pi] === oi) {
+            cls = picks[pi] === p.correct ? ' picked correct' : ' picked wrong';
+          }
+          return '<button class="qopt' + cls + '" data-pi="' + pi + '" data-oi="' + oi + '">' + esc(o) + '</button>';
+        }).join('') +
+        '</div>' +
+        '<div class="qres">' + (picks[pi] >= 0 ? (picks[pi] === p.correct ? '判据一致' : '有偏差') : '待判断') + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  quizList.addEventListener('click', function (e) {
+    var btn = e.target.closest('.qopt');
+    if (!btn) return;
+    var pi = +btn.getAttribute('data-pi');
+    var oi = +btn.getAttribute('data-oi');
+    picks[pi] = oi;
+    renderQuiz();
+
+    var done = picks.filter(function (x) { return x >= 0; }).length;
+    quizFill.style.width = (done / PARADIGMS.length * 100) + '%';
+    quizCount.textContent = done + ' / ' + PARADIGMS.length;
+
+    if (done === PARADIGMS.length) revealQuiz();
+  });
+
+  function revealQuiz() {
+    var right = 0, worst = -1, worstScore = -1;
+    PARADIGMS.forEach(function (p, pi) {
+      if (picks[pi] === p.correct) right++;
+      var s = picks[pi] === p.correct ? 1 : 0;
+      if (s < worstScore) { worstScore = s; worst = pi; }
+    });
+    var rows = PARADIGMS.map(function (p, pi) {
+      var ok = picks[pi] === p.correct;
+      return '<li><b style="color:' + (ok ? 'var(--ok)' : 'var(--risk)') + '">' + esc(p.name) + '</b> — ' + esc(p.why) + '</li>';
+    }).join('');
+    quizOut.style.display = 'block';
+    quizOut.innerHTML =
+      '<b>你判断对 ' + right + ' / ' + PARADIGMS.length + ' 类。</b>' +
+      '<p style="margin:12px 0 8px;font-size:.95rem">真实判据是统一的：<b>结果能否被自动验证</b>。' +
+      '技术难度与数据量都不是主因——闭环控制的技术难度最高却只在少数企业落地，视觉感知的技术难度中等却已成标配，差别就在结果是否可被机器自动判定。</p>' +
+      '<p style="margin:0 0 10px;font-size:.95rem">偏差最大的一类是 <b style="color:var(--risk)">' + esc(PARADIGMS[worst].name) + '</b>，也是最值得展开理解的一类：</p>' +
+      '<ul style="font-size:.92rem;margin:0">' + rows + '</ul>';
+  }
+
+  document.getElementById('quiz-reset').addEventListener('click', function () {
+    picks = new Array(PARADIGMS.length).fill(-1);
+    quizOut.style.display = 'none';
+    quizFill.style.width = '0%';
+    quizCount.textContent = '0 / ' + PARADIGMS.length;
+    renderQuiz();
+  });
+
+  renderQuiz();
+
+  /* ── 6. 结论筛选 ───────────────────────────────── */
+  var TAGN = { tech: '技术', biz: '商业', method: '方法论' };
+  var INDN = { auto: '汽车', fmcg: '快消日化', general: '通用' };
+  var curTag = 'all', curInd = 'all';
+  var conclBox = document.getElementById('concl');
+
+  function renderConcl() {
+    conclBox.innerHTML = window.CONCLUSIONS.map(function (c) {
+      var hide = (curTag !== 'all' && c.tag !== curTag) || (curInd !== 'all' && c.ind !== curInd);
+      return '<div class="citem' + (hide ? ' hidden' : '') + '">' +
+        '<div class="citem-n">' + String(c.id).padStart(2, '0') + '</div>' +
+        '<div class="citem-t">' + esc(c.text) + '</div>' +
+        '<div class="citem-s">' + esc(c.src) + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  var fTags = document.querySelectorAll('#f-tag .fbtn');
+  for (var t = 0; t < fTags.length; t++) {
+    (function (b) {
+      b.addEventListener('click', function () {
+        for (var j = 0; j < fTags.length; j++) fTags[j].classList.remove('on');
+        b.classList.add('on');
+        curTag = b.getAttribute('data-f');
+        renderConcl();
+      });
+    })(fTags[t]);
+  }
+  var fInds = document.querySelectorAll('#f-ind .fbtn');
+  for (var k = 0; k < fInds.length; k++) {
+    (function (b) {
+      b.addEventListener('click', function () {
+        for (var j = 0; j < fInds.length; j++) fInds[j].classList.remove('on');
+        b.classList.add('on');
+        curInd = b.getAttribute('data-f');
+        renderConcl();
+      });
+    })(fInds[k]);
+  }
+  renderConcl();
+
+  /* ── 7. 待核台账 + 术语表 ────────────────────────── */
+  var pendBox = document.getElementById('pending');
+  if (pendBox) {
+    pendBox.innerHTML =
+      '<div class="pending-row pending-h"><div>#</div><div>项目</div><div>所在章节</div><div>需核验内容</div></div>' +
+      window.PENDING.map(function (p, i) {
+        return '<div class="pending-row">' +
+          '<div class="pending-n">' + String(i + 1).padStart(2, '0') + '</div>' +
+          '<div class="pending-i">' + esc(p.item) + '</div>' +
+          '<div class="pending-w">' + esc(p.where) + '</div>' +
+          '<div class="pending-n2">' + esc(p.need) + '</div>' +
+          '</div>';
+      }).join('');
+  }
+
+  var termsBox = document.getElementById('terms');
+  if (termsBox) {
+    termsBox.innerHTML = window.GLOSSARY.map(function (t) {
+      return '<div class="term">' +
+        '<div class="term-t">' + esc(t.term) + '</div>' +
+        '<div class="term-p">→ ' + esc(t.plain) + '</div>' +
+        '<div class="term-n">' + esc(t.note) + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  /* ── 8. 导航高亮 ───────────────────────────────── */
+  var navLinks = document.querySelectorAll('.nav a');
+  var secs = [];
+  for (var n = 0; n < navLinks.length; n++) {
+    var id = navLinks[n].getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if (el) secs.push({ link: navLinks[n], el: el });
+  }
+  function onScroll() {
+    var y = window.scrollY + 140, cur = null;
+    for (var i = 0; i < secs.length; i++) {
+      if (secs[i].el.offsetTop <= y) cur = secs[i].link;
+    }
+    for (var j = 0; j < secs.length; j++) secs[j].link.classList.remove('active');
+    if (cur) cur.classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── 工具 ─────────────────────────────────────── */
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+})();
+
+</script>
+</body>
+</html>
